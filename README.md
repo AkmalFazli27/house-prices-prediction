@@ -1,49 +1,38 @@
-
 # 🏠 House Price Prediction
 
 This project aims to build a machine learning model that can predict house prices based on features such as lot area, number of rooms, location, and other attributes. The dataset used is the **House Prices** dataset (from Kaggle or similar public sources).
 
 ---
 
-
-
 ## 📂 Project Structure
 
-<pre class="overflow-visible!" data-start="404" data-end="1207"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>
-house-prices-prediction/
-|
-├── data/   
+<pre class="overflow-visible!" data-start="103" data-end="938"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>my</span><span>-ml-project/
 │
+├── data/           
 │   ├── raw/              </span><span># original dataset (do not modify)</span><span>
-│   │   └── train.csv
-│   │	└── test.csv
-|   |
+│   │   └── house_prices.csv
+│   │
 │   ├── processed/        </span><span># cleaned dataset</span><span>
-│   │   └── cleaned_train.csv
-│   │	└── cleaned_test.csv
-|   |
-│   └── features/         </span><span># after feature engineering</span><span>
-│       └── engineered_train.csv
-|	└── engineered_train.csv
+│   │   └── cleaned_data.csv
+│   │
+│   └── features/         </span><span># dataset after feature engineering</span><span>
+│       └── engineered_data.csv
 │
-├── notebooks/  
-│   ├── 1_exploration.ipynb         </span><span># EDA (exploring raw data)</span><span>
-│   ├── 2_data_cleaning.ipynb       </span><span># cleaning process</span><span>
-│   ├── 3_feature_engineering.ipynb </span><span># encoding & transformations</span><span>
-│   └── 4_modeling.ipynb            </span><span># training & evaluation</span><span>
+├── notebooks/      
+│   ├── </span><span>1_</span><span>exploration.ipynb         </span><span># EDA (explore raw data)</span><span>
+│   ├── </span><span>2_</span><span>data_cleaning.ipynb       </span><span># data cleaning</span><span>
+│   ├── </span><span>3_</span><span>feature_engineering.ipynb </span><span># encoding, transformation</span><span>
+│   └── </span><span>4_</span><span>modeling.ipynb            </span><span># model training & evaluation</span><span>
 │
-├── models/   
+├── models/         
 │   └── house_price_model.pkl       </span><span># trained model</span><span>
 │
-├── reports/  
-│   └── results.md                  </span><span># experiment results & notes</span><span>
+├── reports/        
+│   └── results.md                  </span><span># experiment notes and results</span><span>
 │
-└── requirements.txt                </span><span># list of dependencies</span><span>
-</span></span></code></div></div></pre>
+└── requirements.txt                </span><span># list of required libraries</span></span></code></div></div></pre>
 
 ---
-
-
 
 ## ⚙️ Installation
 
@@ -54,8 +43,6 @@ Clone this repository and install the required dependencies:
 pip install -r requirements.txt</span></span></code></div></div></pre>
 
 ---
-
-
 
 ## 📝 Project Workflow
 
@@ -79,8 +66,6 @@ pip install -r requirements.txt</span></span></code></div></div></pre>
 
 ---
 
-
-
 ## 📊 Results
 
 * Best model: **(to be filled after experiments)**
@@ -88,8 +73,6 @@ pip install -r requirements.txt</span></span></code></div></div></pre>
 * Detailed results are available in [`reports/results.md`]().
 
 ---
-
-
 
 ## 👨‍💻 Author
 
