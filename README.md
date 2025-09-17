@@ -6,9 +6,9 @@ This project aims to build a machine learning model that can predict house price
 
 ## 📂 Project Structure
 
-<pre class="overflow-visible!" data-start="103" data-end="938"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>my</span><span>-ml-project/
+<pre class="overflow-visible!" data-start="103" data-end="938"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span></span><span>house-prices-prediction/
 │
-├── data/           
+├── data/   
 │   ├── raw/              </span><span># original dataset (do not modify)</span><span>
 │   │   └── house_prices.csv
 │   │
@@ -18,16 +18,16 @@ This project aims to build a machine learning model that can predict house price
 │   └── features/         </span><span># dataset after feature engineering</span><span>
 │       └── engineered_data.csv
 │
-├── notebooks/      
+├── notebooks/  
 │   ├── </span><span>1_</span><span>exploration.ipynb         </span><span># EDA (explore raw data)</span><span>
 │   ├── </span><span>2_</span><span>data_cleaning.ipynb       </span><span># data cleaning</span><span>
 │   ├── </span><span>3_</span><span>feature_engineering.ipynb </span><span># encoding, transformation</span><span>
 │   └── </span><span>4_</span><span>modeling.ipynb            </span><span># model training & evaluation</span><span>
 │
-├── models/         
+├── models/   
 │   └── house_price_model.pkl       </span><span># trained model</span><span>
 │
-├── reports/        
+├── reports/  
 │   └── results.md                  </span><span># experiment notes and results</span><span>
 │
 └── requirements.txt                </span><span># list of required libraries</span></span></code></div></div></pre>
