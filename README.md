@@ -15,13 +15,16 @@ house-prices-prediction/
 ├── data/   
 │
 │   ├── raw/              </span><span># original dataset (do not modify)</span><span>
-│   │   └── house_prices.csv
-│   │
+│   │   └── train.csv
+│   │	└── test.csv
+|   |
 │   ├── processed/        </span><span># cleaned dataset</span><span>
-│   │   └── cleaned_data.csv
-│   │
+│   │   └── cleaned_train.csv
+│   │	└── cleaned_test.csv
+|   |
 │   └── features/         </span><span># after feature engineering</span><span>
-│       └── engineered_data.csv
+│       └── engineered_train.csv
+|	└── engineered_train.csv
 │
 ├── notebooks/  
 │   ├── 1_exploration.ipynb         </span><span># EDA (exploring raw data)</span><span>
