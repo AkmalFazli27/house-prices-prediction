@@ -19,16 +19,13 @@ This project aims to build a machine learning model that can predict house price
 │       └── engineered_data.csv
 │
 ├── notebooks/  
-│   ├── </span><span>1_</span><span>exploration.ipynb         </span><span># EDA (explore raw data)</span><span>
-│   ├── </span><span>2_</span><span>data_cleaning.ipynb       </span><span># data cleaning</span><span>
-│   ├── </span><span>3_</span><span>feature_engineering.ipynb </span><span># encoding, transformation</span><span>
-│   └── </span><span>4_</span><span>modeling.ipynb            </span><span># model training & evaluation</span><span>
+│   ├── </span><span>1_</span><span>data_cleaning.ipynb       </span><span># data cleaning</span><span>
+│   ├── </span><span>2_</span><span>feature_engineering.ipynb </span><span># encoding, transformation</span><span>
+│   └── </span><span>3_</span><span>modeling.ipynb            </span><span># model training & evaluation</span><span>
 │
 ├── models/   
-│   └── house_price_model.pkl       </span><span># trained model</span><span>
-│
-├── reports/  
-│   └── results.md                  </span><span># experiment notes and results</span><span>
+│   └── preprocessing_pipeline.pkl       </span><span># preprocessing pipeline model</span><span>
+|   └── stacking_regressor.pkl       </span><span># trained model</span><span>
 │
 └── requirements.txt                </span><span># list of required libraries</span></span></code></div></div></pre>
 
@@ -62,15 +59,6 @@ pip install -r requirements.txt</span></span></code></div></div></pre>
    * Evaluate performance using metrics such as RMSE and R².
 5. **Reporting**
    * Save the trained model in `models/`.
-   * Document experiments in `reports/results.md`.
-
----
-
-## 📊 Results
-
-* Best model: **(to be filled after experiments)**
-* Evaluation score: (to be filled after experiments)
-* Detailed results are available in [`reports/results.md`]().
 
 ---
 
