@@ -1,1 +1,4 @@
 .vscode
+catboost_info/
+AGENTS.md
+graphify-out/
