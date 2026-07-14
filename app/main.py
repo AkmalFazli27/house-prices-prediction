@@ -10,3 +10,12 @@ from .schemas import (
     HouseInput,
     PredictionOutput,
 )
+
+model = HousePriceModel()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    model.load()
+    yield
+
+app = FastAPI(title="House Prediction API", lifespan=lifespan)
