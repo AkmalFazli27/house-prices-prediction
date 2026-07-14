@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import Optional
 
 class HouseInput(BaseModel):
@@ -81,6 +81,34 @@ class HouseInput(BaseModel):
     YrSold: Optional[float] = Field(None)
     SaleType: Optional[str] = Field(None)
     SaleCondition: Optional[str] = Field(None)
+    
+    @field_validator("OverallQual")
+    @classmethod
+    def validate_quality(cls, v):
+        if v is not None and (v < 1 or v > 10):
+            raise ValueError("OverallQual should be between 1-10")
+        return v
+
+    @field_validator("YearBuilt")
+    @classmethod
+    def validate_year(cls, v):
+        if v is not None and v > 2026:  
+            raise ValueError("YearBuilt must not be in the future")
+        return v
+
+    @field_validator("LotArea")
+    @classmethod
+    def validate_lot_area(cls, v):
+        if v is not None and v <= 0:
+            raise ValueError("LotArea should be greater than 0")
+        return v
+
+    @field_validator("BedroomAbvGr")
+    @classmethod
+    def validate_bedrooms(cls, v):
+        if v is not None and v < 0:
+            raise ValueError("The number of bedrooms cannot be negative.")
+        return v
     
 class BatchHouseInput(BaseModel):
     houses: list[HouseInput]
