@@ -59,5 +59,12 @@ def predict_one(house: HouseInput):
 @app.post("/predict/batch", response_model=BatchPredictionOutput)
 def predict_batch(batch: BatchHouseInput):
     df = pd.DataFrame([h.model_dump(by_alias=True) for h in batch.houses])
-    preds = model.predict(df)
+    
+    try:
+        preds = model.predict(df)
+    except Exception as e:
+        logger.error(f"Batch prediction failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Batch prediction failed")
+    
+    logger.info(f"Batch predict result: {len(preds)} predictions")
     return BatchPredictionOutput(predictions=preds.tolist())
