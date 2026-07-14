@@ -1,6 +1,8 @@
 from contextlib import asynccontextmanager
 
 import pandas as pd
+import logging
+from pathlib import Path
 from fastapi import FastAPI
 
 from .model import HousePriceModel
@@ -35,3 +37,16 @@ def predict_batch(batch: BatchHouseInput):
     df = pd.DataFrame([h.model_dump(by_alias=True) for h in batch.houses])
     preds = model.predict(df)
     return BatchPredictionOutput(predictions=preds.tolist())
+
+LOG_DIR = Path(__file__).resolve().parent.parent / "logs"
+LOG_DIR.mkdir(exist_ok=True)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_DIR / "api.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
