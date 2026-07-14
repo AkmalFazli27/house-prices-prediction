@@ -3,7 +3,8 @@ from contextlib import asynccontextmanager
 import pandas as pd
 import logging
 from pathlib import Path
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
 
 from .model import HousePriceModel
 from .schemas import (
@@ -68,3 +69,11 @@ def predict_batch(batch: BatchHouseInput):
     
     logger.info(f"Batch predict result: {len(preds)} predictions")
     return BatchPredictionOutput(predictions=preds.tolist())
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Unhandled error: {exc}", exc_info=True)
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal server error"}
+    )
