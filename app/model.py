@@ -13,10 +13,10 @@ class HousePriceModel:
 
     def load(self):
         self.preprocessing_pipeline = joblib.load(
-            self.MODEL_DIR / "preprocessing_pipeline.pkl"
+            MODEL_DIR / "preprocessing_pipeline.pkl"
         )
         self.stacking_regressor = joblib.load(
-            self.MODEL_DIR / "stacking_regressor.pkl"
+            MODEL_DIR / "stacking_regressor.pkl"
         )
 
     def predict(self, df: pd.DataFrame) -> np.ndarray:
