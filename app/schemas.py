@@ -19,7 +19,7 @@ class HouseInput(BaseModel):
     BldgType: Optional[str] = Field(None)
     HouseStyle: Optional[str] = Field(None)
     OverallQual: Optional[float] = Field(None)
-    OverallCond: Optional[float] = Field(Field(None))
+    OverallCond: Optional[float] = Field(None)
     YearBuilt: Optional[float] = Field(None)
     YearRemodAdd: Optional[float] = Field(None)
     RoofStyle: Optional[str] = Field(None)
@@ -44,8 +44,8 @@ class HouseInput(BaseModel):
     HeatingQC: Optional[str] = Field(None)
     CentralAir: Optional[str] = Field(None)
     Electrical: Optional[str] = Field(None)
-    _1stFlrSF: Optional[float] = Field(None)
-    _2ndFlrSF: Optional[float] = Field(None)
+    FirstFlrSF: Optional[float] = Field(None, alias="1stFlrSF")
+    SecondFlrSF: Optional[float] = Field(None, alias="2ndFlrSF")
     LowQualFinSF: Optional[float] = Field(None)
     GrLivArea: Optional[float] = Field(None)
     BsmtFullBath: Optional[float] = Field(None)
@@ -70,7 +70,7 @@ class HouseInput(BaseModel):
     WoodDeckSF: Optional[float] = Field(None)
     OpenPorchSF: Optional[float] = Field(None)
     EnclosedPorch: Optional[float] = Field(None)
-    _3SsnPorch: Optional[float] = Field(None)
+    ThreeSsnPorch: Optional[float] = Field(None, alias="3SsnPorch")
     ScreenPorch: Optional[float] = Field(None)
     PoolArea: Optional[float] = Field(None)
     PoolQC: Optional[str] = Field(None)
@@ -82,3 +82,11 @@ class HouseInput(BaseModel):
     SaleType: Optional[str] = Field(None)
     SaleCondition: Optional[str] = Field(None)
     
+class BatchHouseInput(BaseModel):
+    houses: list[HouseInput]
+
+class PredictionOutput(BaseModel):
+    prediction: float
+
+class BatchPredictionOutput(BaseModel):
+    predictions: list[float]
