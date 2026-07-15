@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Mode — Omah.AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-logo">Omah.AI</a>
+      <ul class="navbar-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/simple" class="active" aria-current="page">Simple Mode</a></li>
+        <li><a href="/detail">Detail Mode</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="simple-layout">
+    <!-- Sidebar -->
+    <aside class="simple-sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-icon">
+          <span class="material-symbols-outlined" aria-hidden="true">bolt</span>
+        </div>
+        <h2>Simple Mode</h2>
+        <p>Quickly estimate your property value with 10 key variables. Our AI model processes market trends to deliver results in seconds.</p>
+      </div>
+    </aside>
+
+    <!-- Form -->
+    <section class="simple-form-section">
+      <div class="form-card">
+        <h1>Input Data Property</h1>
+
+        <form action="/simple" method="POST">
+
+          <!-- SIZE & LAYOUT -->
+          <div class="form-section">
+            <span class="form-section-label">Size &amp; Layout</span>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="total_area">Total Area (sq ft)</label>
+                <input type="number" id="total_area" name="total_area" class="form-input" placeholder="e.g. 2000" required>
+              </div>
+              <div class="form-group">
+                <label for="lot_area">Lot Area (sq ft)</label>
+                <input type="number" id="lot_area" name="lot_area" class="form-input" placeholder="e.g. 5000" required>
+              </div>
+              <div class="form-group">
+                <label for="totrmsabvgrd">Total Rooms</label>
+                <select id="totrmsabvgrd" name="totrmsabvgrd" class="form-input" required>
+                  <option value="" disabled selected>Select...</option>
+                  <option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                  <option value="6">6</option><option value="7">7</option><option value="8">8</option>
+                  <option value="9">9</option><option value="10">10</option><option value="11">11</option>
+                  <option value="12">12</option><option value="13">13</option><option value="14">14</option>
+                  <option value="15">15+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="bedroomabvgr">Bedrooms</label>
+                <select id="bedroomabvgr" name="bedroomabvgr" class="form-input" required>
+                  <option value="" disabled selected>Select...</option>
+                  <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                  <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+                  <option value="7">7</option><option value="8">8+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUALITY & CONDITION -->
+          <div class="form-section">
+            <span class="form-section-label">Quality &amp; Condition</span>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="overallqual">Overall Quality</label>
+                <div class="range-wrapper">
+                  <input type="range" id="overallqual" name="overallqual" class="form-range" min="1" max="10" value="5">
+                  <span class="range-value" id="overallqual-value">5</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="house_age">House Age (years)</label>
+                <input type="number" id="house_age" name="house_age" class="form-input" placeholder="e.g. 15" required>
+              </div>
+              <div class="form-group">
+                <label for="garagecars">Garage Capacity</label>
+                <select id="garagecars" name="garagecars" class="form-input" required>
+                  <option value="" disabled selected>Select...</option>
+                  <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+                  <option value="3">3</option><option value="4">4+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fireplaces">Fireplaces</label>
+                <select id="fireplaces" name="fireplaces" class="form-input" required>
+                  <option value="" disabled selected>Select...</option>
+                  <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+                  <option value="3">3</option><option value="4">4+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- LOCATION -->
+          <div class="form-section">
+            <span class="form-section-label">Location</span>
+            <div class="form-grid">
+              <div class="form-group form-group-full">
+                <label for="neighborhood">Neighborhood</label>
+                <select id="neighborhood" name="neighborhood" class="form-input" required>
+                  <option value="" disabled selected>Select neighborhood...</option>
+                  <option value="NAmes">NAmes</option><option value="CollgCr">CollgCr</option>
+                  <option value="OldTown">OldTown</option><option value="Edwards">Edwards</option>
+                  <option value="Somerst">Somerst</option><option value="Gilbert">Gilbert</option>
+                  <option value="NridgHt">NridgHt</option><option value="Sawyer">Sawyer</option>
+                  <option value="NWAmes">NWAmes</option><option value="SawyerW">SawyerW</option>
+                  <option value="BrkSide">BrkSide</option><option value="Crawfor">Crawfor</option>
+                  <option value="Mitchel">Mitchel</option><option value="Timber">Timber</option>
+                  <option value="ClearCr">ClearCr</option><option value="StoneBr">StoneBr</option>
+                  <option value="SWISU">SWISU</option><option value="MeadowV">MeadowV</option>
+                  <option value="Blmngtn">Blmngtn</option><option value="BrDale">BrDale</option>
+                  <option value="Veenker">Veenker</option><option value="NPkVill">NPkVill</option>
+                  <option value="Blueste">Blueste</option><option value="IDOTRR">IDOTRR</option>
+                  <option value="GrnHill">GrnHill</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- OPTIONAL -->
+          <div class="form-section">
+            <span class="form-section-label">Optional <span class="optional-badge">Optional</span></span>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="kitchenqual">Kitchen Quality</label>
+                <select id="kitchenqual" name="kitchenqual" class="form-input">
+                  <option value="" selected>Choose...</option>
+                  <option value="Fa">Fa</option><option value="TA">TA</option>
+                  <option value="Gd">Gd</option><option value="Ex">Ex</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exterqual">Exterior Quality</label>
+                <select id="exterqual" name="exterqual" class="form-input">
+                  <option value="" selected>Choose...</option>
+                  <option value="Fa">Fa</option><option value="TA">TA</option>
+                  <option value="Gd">Gd</option><option value="Ex">Ex</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="centralair">Central Air</label>
+                <select id="centralair" name="centralair" class="form-input">
+                  <option value="" selected>Choose...</option>
+                  <option value="Y">Yes</option><option value="N">No</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="bsmtqual">Basement Quality</label>
+                <select id="bsmtqual" name="bsmtqual" class="form-input">
+                  <option value="" selected>Choose...</option>
+                  <option value="None">None</option><option value="Fa">Fa</option>
+                  <option value="TA">TA</option><option value="Gd">Gd</option><option value="Ex">Ex</option>
+                </select>
+              </div>
+              <div class="form-group form-group-full">
+                <label for="lotfrontage">Lot Frontage (ft)</label>
+                <input type="number" id="lotfrontage" name="lotfrontage" class="form-input" placeholder="e.g. 60">
+              </div>
+            </div>
+          </div>
+
+          <!-- SUBMIT -->
+          <div class="form-submit">
+            <button type="submit" class="btn-predict">
+              Predict Price
+              <span class="material-symbols-outlined" aria-hidden="true">trending_up</span>
+            </button>
+            <p class="form-disclaimer">*Prediction uses our latest ensemble model trained on market data.</p>
+          </div>
+
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Live range slider label update
+    document.getElementById('overallqual')?.addEventListener('input', function() {
+      document.getElementById('overallqual-value').textContent = this.value;
+    });
+  </script>
+
+</body>
+</html>
