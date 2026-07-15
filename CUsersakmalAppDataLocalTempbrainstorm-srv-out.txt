@@ -1,0 +1,1 @@
+--project-dir: line 1: /c/Users/akmal/.cache/opencode/packages/superpowers@git+https_/github.com/obra/superpowers.git/node_modules/superpowers/skills/brainstorming/scripts/start-server.sh: No such file or directory
