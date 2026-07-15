@@ -1,0 +1,44 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Colors */
+  --primary: #0F172A;
+  --on-primary: #FFFFFF;
+  --secondary: #0D9488;
+  --on-secondary: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-container: #F8FAFC;
+  --surface-container-low: #F1F5F9;
+  --on-surface: #1E293B;
+  --on-surface-variant: #64748B;
+  --outline: #E2E8F0;
+  --outline-variant: #CBD5E1;
+
+  /* Typography */
+  --font-display: 'Hanken Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-label: 'JetBrains Mono', monospace;
+
+  /* Spacing */
+  --gutter: 24px;
+  --stack-sm: 12px;
+  --stack-md: 24px;
+  --stack-lg: 40px;
+  --margin-desktop: 48px;
+  --margin-mobile: 16px;
+  --container-max: 1280px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--on-surface);
+  background: var(--surface);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
