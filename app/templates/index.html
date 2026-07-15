@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstatePredict AI — Predict Your Home Price</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+<body>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badge">AI-Powered Valuation</div>
+        <h1>Predict Your Home Price with AI</h1>
+        <p>Use cutting-edge machine learning algorithms to get accurate property value estimates. Choose the analysis depth that fits your needs.</p>
+      </div>
+    </section>
+
+    <!-- Mode Cards -->
+    <section class="mode-section">
+      <div class="container">
+        <div class="mode-grid">
+          <!-- Simple Mode -->
+          <div class="mode-card">
+            <div class="mode-card-icon">
+              <span class="material-symbols-outlined">speed</span>
+            </div>
+            <h3>Quick Mode</h3>
+            <p>Fast analysis using 10&ndash;15 key features like location, lot size, and number of rooms. Ideal for a quick estimate.</p>
+            <a href="/simple" class="btn">
+              Get Started <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+          </div>
+
+          <!-- Detail Mode -->
+          <div class="mode-card">
+            <div class="mode-card-icon">
+              <span class="material-symbols-outlined">analytics</span>
+            </div>
+            <h3>Detailed Mode</h3>
+            <p>In-depth analysis with all 79 technical parameters including building materials, property age, and environmental amenities.</p>
+            <a href="/detail" class="btn">
+              Deep Analysis <span class="material-symbols-outlined">precision_manufacturing</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
