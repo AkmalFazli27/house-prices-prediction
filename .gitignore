@@ -4,3 +4,7 @@ AGENTS.md
 graphify-out/
 api-env/
 __pycache__/
+DESIGN.md
+logs/
+docs/
+stitch_house_price_predictor/
