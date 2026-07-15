@@ -4,7 +4,9 @@ import pandas as pd
 import logging
 from pathlib import Path
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from .model import HousePriceModel
 from .schemas import (
@@ -13,6 +15,9 @@ from .schemas import (
     HouseInput,
     PredictionOutput,
 )
+
+BASE_DIR = Path(__file__).resolve().parent
+TEMPLATES = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
 LOG_DIR = Path(__file__).resolve().parent.parent / "logs"
 LOG_DIR.mkdir(exist_ok=True)
@@ -35,6 +40,12 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title="House Prediction API", lifespan=lifespan)
+
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
+
+@app.get("/simple", response_class=HTMLResponse)
+def simple_form(request: Request):
+    return TEMPLATES.TemplateResponse("simple.html", {"request": request})
 
 @app.get("/health")
 def health():
