@@ -315,7 +315,9 @@ body {
   font-size: 2rem;
   color: var(--secondary);
   margin-bottom: var(--stack-sm);
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stat-card .stat-value {
