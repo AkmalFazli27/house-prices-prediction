@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=block" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+  <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
@@ -120,19 +121,18 @@
                 <label for="neighborhood">Neighborhood</label>
                 <select id="neighborhood" name="neighborhood" class="form-input" required>
                   <option value="" disabled selected>Select neighborhood...</option>
-                  <option value="NAmes">NAmes</option><option value="CollgCr">CollgCr</option>
-                  <option value="OldTown">OldTown</option><option value="Edwards">Edwards</option>
-                  <option value="Somerst">Somerst</option><option value="Gilbert">Gilbert</option>
-                  <option value="NridgHt">NridgHt</option><option value="Sawyer">Sawyer</option>
-                  <option value="NWAmes">NWAmes</option><option value="SawyerW">SawyerW</option>
-                  <option value="BrkSide">BrkSide</option><option value="Crawfor">Crawfor</option>
-                  <option value="Mitchel">Mitchel</option><option value="Timber">Timber</option>
-                  <option value="ClearCr">ClearCr</option><option value="StoneBr">StoneBr</option>
-                  <option value="SWISU">SWISU</option><option value="MeadowV">MeadowV</option>
-                  <option value="Blmngtn">Blmngtn</option><option value="BrDale">BrDale</option>
-                  <option value="Veenker">Veenker</option><option value="NPkVill">NPkVill</option>
-                  <option value="Blueste">Blueste</option><option value="IDOTRR">IDOTRR</option>
-                  <option value="GrnHill">GrnHill</option>
+                  <option value="NAmes">Bloomington Heights</option><option value="CollgCr">College Creek</option>
+                  <option value="OldTown">Old Town</option><option value="Edwards">Edwards</option>
+                  <option value="Somerst">Somerset</option><option value="Gilbert">Gilbert</option>
+                  <option value="NridgHt">Northridge Heights</option><option value="Sawyer">Sawyer</option>
+                  <option value="NWAmes">Northwest Ames</option><option value="SawyerW">Sawyer West</option>
+                  <option value="BrkSide">Brookside</option><option value="Crawfor">Crawford</option>
+                  <option value="Mitchel">Mitchel</option><option value="Timber">Timberland</option>
+                  <option value="ClearCr">Clear Creek</option><option value="StoneBr">Stone Brook</option>
+                  <option value="SWISU">South & West of Iowa State University</option><option value="MeadowV">Meadow Village</option>
+                  <option value="Blmngtn">Bloomington Heights</option><option value="BrDale">Briardale</option>
+                  <option value="Veenker">Veenker</option><option value="NPkVill">Northpark Villa</option>
+                  <option value="Blueste">Bluestem</option><option value="IDOTRR">Iowa DOT and Rail Road</option>
                 </select>
               </div>
             </div>
@@ -140,22 +140,24 @@
 
           <!-- OPTIONAL -->
           <div class="form-section">
-            <span class="form-section-label">Optional <span class="optional-badge">Optional</span></span>
+            <span class="form-section-label">Optional <span class="optional-badge">For better prediction</span></span>
             <div class="form-grid">
               <div class="form-group">
                 <label for="kitchenqual">Kitchen Quality</label>
                 <select id="kitchenqual" name="kitchenqual" class="form-input">
                   <option value="" selected>Choose...</option>
-                  <option value="Fa">Fa</option><option value="TA">TA</option>
-                  <option value="Gd">Gd</option><option value="Ex">Ex</option>
+                  <option value="Ex">Excellent</option><option value="Gd">Good</option>
+                  <option value="TA">Typical/Average</option><option value="Fa">Fair</option>
+                  <option value="Po">Poor</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="exterqual">Exterior Quality</label>
                 <select id="exterqual" name="exterqual" class="form-input">
                   <option value="" selected>Choose...</option>
-                  <option value="Fa">Fa</option><option value="TA">TA</option>
-                  <option value="Gd">Gd</option><option value="Ex">Ex</option>
+                  <option value="Ex">Excellent</option><option value="Gd">Good</option>
+                  <option value="TA">Typical/Average</option><option value="Fa">Fair</option>
+                  <option value="Po">Poor</option>
                 </select>
               </div>
               <div class="form-group">
@@ -169,8 +171,9 @@
                 <label for="bsmtqual">Basement Quality</label>
                 <select id="bsmtqual" name="bsmtqual" class="form-input">
                   <option value="" selected>Choose...</option>
-                  <option value="None">None</option><option value="Fa">Fa</option>
-                  <option value="TA">TA</option><option value="Gd">Gd</option><option value="Ex">Ex</option>
+                  <option value="Ex">Excellent (100+ inches)</option><option value="Gd">Good (90-99 inches)</option>
+                  <option value="TA">Typical (80-89 inches)</option><option value="Fa">Fair (70-79 inches)</option>
+                  <option value="Po">Poor (&lt;70 inches)</option><option value="NA">No Basement</option>
                 </select>
               </div>
               <div class="form-group form-group-full">
