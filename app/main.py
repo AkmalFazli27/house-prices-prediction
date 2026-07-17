@@ -8,6 +8,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from .feature_data import FEATURE_GROUPS
 from .model import HousePriceModel
 from .schemas import (
     BatchHouseInput,
@@ -46,6 +47,39 @@ app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="stat
 @app.get("/simple", response_class=HTMLResponse)
 def simple_form(request: Request):
     return TEMPLATES.TemplateResponse("simple.html", {"request": request})
+
+@app.get("/detail", response_class=HTMLResponse)
+def detail_form(request: Request):
+    return TEMPLATES.TemplateResponse("detail.html", {
+        "request": request,
+        "groups": FEATURE_GROUPS
+    })
+
+@app.post("/detail", response_class=HTMLResponse)
+async def detail_predict(request: Request):
+    form_data = await request.form()
+    form = dict(form_data)
+    for k, v in form.items():
+        if v == '':
+            form[k] = None
+    house = HouseInput(**form)
+    df = pd.DataFrame([house.model_dump(by_alias=True)])
+    try:
+        pred = model.predict(df)
+    except Exception as e:
+        logger.error(f"Detail prediction failed: {e}", exc_info=True)
+        return TEMPLATES.TemplateResponse("detail.html", {
+            "request": request,
+            "groups": FEATURE_GROUPS,
+            "error": "Prediction failed. Please check your inputs."
+        })
+    result = float(pred[0])
+    return TEMPLATES.TemplateResponse("detail.html", {
+        "request": request,
+        "groups": FEATURE_GROUPS,
+        "prediction": result,
+        "form_data": form
+    })
 
 @app.get("/health")
 def health():

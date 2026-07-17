@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detailed Mode — Omah.AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-logo">Omah.AI</a>
+      <ul class="navbar-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/simple">Quick Mode</a></li>
+        <li><a href="/detail" class="active" aria-current="page">Detailed Mode</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="detail-layout">
+
+    <!-- Sidebar -->
+    <aside class="detail-sidebar" id="sidebar">
+      <nav class="detail-sidebar-nav">
+        {% for group in groups %}
+        <a href="#section-{{ group.id }}" class="detail-sidebar-item" data-section="{{ group.id }}">
+          <span class="material-symbols-outlined" aria-hidden="true">{{ group.icon }}</span>
+          {{ group.label }}
+          <span class="badge">{{ group.fields|length }}</span>
+        </a>
+        {% endfor %}
+      </nav>
+    </aside>
+
+    <!-- Form -->
+    <section class="detail-content">
+      <div class="detail-header">
+        <h1>Detailed Property Analysis</h1>
+        <p>Complete all 79 parameters for the most accurate Ames, IA property valuation.</p>
+      </div>
+
+      <form action="/detail" method="POST">
+
+        {% for group in groups %}
+        <div class="detail-section" id="section-{{ group.id }}">
+          <div class="detail-section-header">
+            <span class="material-symbols-outlined" aria-hidden="true">{{ group.icon }}</span>
+            <h2>{{ group.label }}</h2>
+          </div>
+
+          <div class="detail-field-grid {% if group.id in ('interior_rooms', 'exterior_foundation', 'outdoor_features') %}detail-field-grid-3{% endif %}">
+            {% for field in group.fields %}
+            <div class="detail-field">
+              <label for="{{ field.name }}">{{ field.label }}</label>
+
+              {% if field.type == "select" %}
+              <select id="{{ field.name }}" name="{{ field.name }}">
+                <option value="">Select...</option>
+                {% for val, display in field.options %}
+                <option value="{{ val }}">{{ display }}</option>
+                {% endfor %}
+              </select>
+
+              {% elif field.type == "range" %}
+              <div class="detail-range-wrapper">
+                <input type="range" id="{{ field.name }}" name="{{ field.name }}"
+                       min="{{ field.min }}" max="{{ field.max }}" value="{{ field.value }}">
+                <span class="detail-range-value" id="{{ field.name }}-value">{{ field.value }}</span>
+              </div>
+
+              {% else %}
+              <input type="number" id="{{ field.name }}" name="{{ field.name }}"
+                     placeholder="{{ field.placeholder | default('') }}"
+                     {% if field.min is defined %}min="{{ field.min }}"{% endif %}
+                     {% if field.max is defined %}max="{{ field.max }}"{% endif %}>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+
+        <!-- Submit -->
+        <div class="detail-submit-bar">
+          <span style="font-size:0.8125rem;color:var(--on-surface-variant);">
+            <span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;" aria-hidden="true">info</span>
+            All fields are optional — empty fields use sensible defaults
+          </span>
+          <button type="submit" class="btn-predict">
+            Predict Price
+            <span class="material-symbols-outlined" aria-hidden="true">trending_up</span>
+          </button>
+        </div>
+
+      </form>
+    </section>
+
+  </main>
+
+  <script>
+    (function() {
+      const sections = document.querySelectorAll('.detail-section');
+      const navItems = document.querySelectorAll('.detail-sidebar-item');
+
+      function updateActiveSection() {
+        let current = '';
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 150) {
+            current = section.id.replace('section-', '');
+          }
+        });
+
+        navItems.forEach(item => {
+          if (item.dataset.section === current) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveSection, { passive: true });
+      updateActiveSection();
+
+      document.querySelectorAll('input[type="range"]').forEach(slider => {
+        slider.addEventListener('input', function() {
+          document.getElementById(this.id + '-value').textContent = this.value;
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
