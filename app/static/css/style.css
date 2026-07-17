@@ -747,6 +747,56 @@ select.form-input {
    Detailed Mode
    ============================================= */
 
+.result-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(13, 148, 136, 0.08);
+  border: 1px solid var(--secondary);
+  border-radius: 8px;
+  padding: var(--stack-md);
+  margin-bottom: var(--stack-md);
+}
+
+.result-banner .material-symbols-outlined {
+  font-size: 28px;
+  color: var(--secondary);
+}
+
+.result-banner strong {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--on-surface);
+}
+
+.result-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-left: 8px;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(186, 26, 26, 0.08);
+  border: 1px solid var(--error, #ba1a1a);
+  border-radius: 8px;
+  padding: var(--stack-md);
+  margin-bottom: var(--stack-md);
+  color: var(--error, #ba1a1a);
+}
+
+.error-banner .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.error-banner span:last-child {
+  font-size: 0.875rem;
+}
+
 .detail-layout {
   max-width: var(--container-max);
   margin: 0 auto;

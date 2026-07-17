@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=block" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+  <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
@@ -27,7 +28,7 @@
   <main class="detail-layout">
 
     <!-- Sidebar -->
-    <aside class="detail-sidebar" id="sidebar">
+    <aside class="detail-sidebar" id="sidebar" role="navigation" aria-label="Feature categories">
       <nav class="detail-sidebar-nav">
         {% for group in groups %}
         <a href="#section-{{ group.id }}" class="detail-sidebar-item" data-section="{{ group.id }}">
@@ -46,6 +47,21 @@
         <p>Complete all 79 parameters for the most accurate Ames, IA property valuation.</p>
       </div>
 
+      {% if prediction %}
+      <div class="result-banner">
+        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+        <div>
+          <strong>Estimated Price:</strong>
+          <span class="result-value">${{ "{:,.0f}".format(prediction) }}</span>
+        </div>
+      </div>
+      {% elif error %}
+      <div class="error-banner">
+        <span class="material-symbols-outlined" aria-hidden="true">error</span>
+        <span>{{ error }}</span>
+      </div>
+      {% endif %}
+
       <form action="/detail" method="POST">
 
         {% for group in groups %}
@@ -55,29 +71,33 @@
             <h2>{{ group.label }}</h2>
           </div>
 
-          <div class="detail-field-grid {% if group.id in ('interior_rooms', 'exterior_foundation', 'outdoor_features') %}detail-field-grid-3{% endif %}">
+          <div class="detail-field-grid">
             {% for field in group.fields %}
             <div class="detail-field">
               <label for="{{ field.name }}">{{ field.label }}</label>
 
               {% if field.type == "select" %}
+              {% set current_val = form_data.get(field.name, '') %}
               <select id="{{ field.name }}" name="{{ field.name }}">
                 <option value="">Select...</option>
                 {% for val, display in field.options %}
-                <option value="{{ val }}">{{ display }}</option>
+                <option value="{{ val }}" {% if val == current_val %}selected{% endif %}>{{ display }}</option>
                 {% endfor %}
               </select>
 
               {% elif field.type == "range" %}
+              {% set current_val = form_data.get(field.name, field.value) %}
               <div class="detail-range-wrapper">
                 <input type="range" id="{{ field.name }}" name="{{ field.name }}"
-                       min="{{ field.min }}" max="{{ field.max }}" value="{{ field.value }}">
-                <span class="detail-range-value" id="{{ field.name }}-value">{{ field.value }}</span>
+                       min="{{ field.min }}" max="{{ field.max }}" value="{{ current_val }}"
+                       aria-label="{{ field.label }}">
+                <span class="detail-range-value" id="{{ field.name }}-value">{{ current_val }}</span>
               </div>
 
               {% else %}
               <input type="number" id="{{ field.name }}" name="{{ field.name }}"
                      placeholder="{{ field.placeholder | default('') }}"
+                     value="{{ form_data.get(field.name, '') }}"
                      {% if field.min is defined %}min="{{ field.min }}"{% endif %}
                      {% if field.max is defined %}max="{{ field.max }}"{% endif %}>
               {% endif %}
@@ -111,12 +131,20 @@
 
       function updateActiveSection() {
         let current = '';
+        const scrollBottom = window.scrollY + window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
+
         sections.forEach(section => {
           const rect = section.getBoundingClientRect();
           if (rect.top <= 150) {
             current = section.id.replace('section-', '');
           }
         });
+
+        if (!current && scrollBottom >= docHeight - 10 && sections.length > 0) {
+          const lastSection = sections[sections.length - 1];
+          current = lastSection.id.replace('section-', '');
+        }
 
         navItems.forEach(item => {
           if (item.dataset.section === current) {
@@ -128,6 +156,7 @@
       }
 
       window.addEventListener('scroll', updateActiveSection, { passive: true });
+      window.addEventListener('resize', updateActiveSection, { passive: true });
       updateActiveSection();
 
       document.querySelectorAll('input[type="range"]').forEach(slider => {

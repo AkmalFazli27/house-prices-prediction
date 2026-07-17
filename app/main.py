@@ -9,6 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from .feature_data import FEATURE_GROUPS
+from pydantic import ValidationError
 from .model import HousePriceModel
 from .schemas import (
     BatchHouseInput,
@@ -62,7 +63,15 @@ async def detail_predict(request: Request):
     for k, v in form.items():
         if v == '':
             form[k] = None
-    house = HouseInput(**form)
+    try:
+        house = HouseInput(**form)
+    except ValidationError as e:
+        return TEMPLATES.TemplateResponse("detail.html", {
+            "request": request,
+            "groups": FEATURE_GROUPS,
+            "error": f"Invalid input: {e.errors()[0]['msg']}",
+            "form_data": form
+        })
     df = pd.DataFrame([house.model_dump(by_alias=True)])
     try:
         pred = model.predict(df)
@@ -71,7 +80,8 @@ async def detail_predict(request: Request):
         return TEMPLATES.TemplateResponse("detail.html", {
             "request": request,
             "groups": FEATURE_GROUPS,
-            "error": "Prediction failed. Please check your inputs."
+            "error": "Prediction failed. Please check your inputs.",
+            "form_data": form
         })
     result = float(pred[0])
     return TEMPLATES.TemplateResponse("detail.html", {
