@@ -16,6 +16,7 @@ from .schemas import (
     BatchPredictionOutput,
     HouseInput,
     PredictionOutput,
+    SimpleHouseInput,
 )
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -48,6 +49,53 @@ app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="stat
 @app.get("/simple", response_class=HTMLResponse)
 def simple_form(request: Request):
     return TEMPLATES.TemplateResponse(request, "simple.html")
+
+@app.post("/simple", response_class=HTMLResponse)
+async def simple_predict(request: Request):
+    form_data = await request.form()
+    form = dict(form_data)
+    for k, v in form.items():
+        if v == '':
+            form[k] = None
+    try:
+        simple = SimpleHouseInput(**form)
+    except ValidationError as e:
+        return TEMPLATES.TemplateResponse(request, "simple.html", {
+            "error": f"Invalid input: {e.errors()[0]['msg']}",
+            "form_data": form
+        })
+    full = model.simple_to_full(
+        total_area=simple.total_area,
+        lot_area=simple.lot_area,
+        totrmsabvgrd=simple.totrmsabvgrd,
+        bedroomabvgr=simple.bedroomabvgr,
+        overallqual=simple.overallqual,
+        house_age=simple.house_age,
+        garagecars=simple.garagecars,
+        fireplaces=simple.fireplaces,
+        neighborhood=simple.neighborhood,
+        kitchenqual=simple.kitchenqual,
+        exterqual=simple.exterqual,
+        centralair=simple.centralair,
+        bsmtqual=simple.bsmtqual,
+        lotfrontage=simple.lotfrontage,
+    )
+    df = pd.DataFrame([full])
+    try:
+        result = model.predict_with_confidence(df)
+    except Exception as e:
+        logger.error(f"Simple prediction failed: {e}", exc_info=True)
+        return TEMPLATES.TemplateResponse(request, "simple.html", {
+            "error": "Prediction failed. Please check your inputs.",
+            "form_data": form
+        })
+    return TEMPLATES.TemplateResponse(request, "simple.html", {
+        "prediction": result["prediction"],
+        "confidence": result["confidence"],
+        "lower": result["lower"],
+        "upper": result["upper"],
+        "form_data": form
+    })
 
 @app.get("/detail", response_class=HTMLResponse)
 def detail_form(request: Request):
