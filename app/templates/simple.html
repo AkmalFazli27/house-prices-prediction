@@ -207,6 +207,29 @@
           </div>
 
         </form>
+
+        {% if prediction %}
+        <div class="result-banner">
+          <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+          <div class="result-body">
+            <strong>Estimated Price:</strong>
+            <span class="result-value">${{ "{:,.0f}".format(prediction) }}</span>
+            <div class="result-meta">
+              <span class="confidence-badge confidence-{{ 'high' if confidence >= 80 else 'medium' if confidence >= 50 else 'low' }}">
+                {{ confidence }}% Confidence
+              </span>
+              <span class="result-range">
+                Range: ${{ "{:,.0f}".format(lower) }} – ${{ "{:,.0f}".format(upper) }}
+              </span>
+            </div>
+          </div>
+        </div>
+        {% elif error %}
+        <div class="error-banner">
+          <span class="material-symbols-outlined" aria-hidden="true">error</span>
+          <span>{{ error }}</span>
+        </div>
+        {% endif %}
       </div>
     </section>
   </main>
