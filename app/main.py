@@ -47,13 +47,13 @@ app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="stat
 
 @app.get("/simple", response_class=HTMLResponse)
 def simple_form(request: Request):
-    return TEMPLATES.TemplateResponse("simple.html", {"request": request})
+    return TEMPLATES.TemplateResponse(request, "simple.html")
 
 @app.get("/detail", response_class=HTMLResponse)
 def detail_form(request: Request):
-    return TEMPLATES.TemplateResponse("detail.html", {
-        "request": request,
-        "groups": FEATURE_GROUPS
+    return TEMPLATES.TemplateResponse(request, "detail.html", {
+        "groups": FEATURE_GROUPS,
+        "form_data": {}
     })
 
 @app.post("/detail", response_class=HTMLResponse)
@@ -66,8 +66,7 @@ async def detail_predict(request: Request):
     try:
         house = HouseInput(**form)
     except ValidationError as e:
-        return TEMPLATES.TemplateResponse("detail.html", {
-            "request": request,
+        return TEMPLATES.TemplateResponse(request, "detail.html", {
             "groups": FEATURE_GROUPS,
             "error": f"Invalid input: {e.errors()[0]['msg']}",
             "form_data": form
@@ -77,15 +76,13 @@ async def detail_predict(request: Request):
         pred = model.predict(df)
     except Exception as e:
         logger.error(f"Detail prediction failed: {e}", exc_info=True)
-        return TEMPLATES.TemplateResponse("detail.html", {
-            "request": request,
+        return TEMPLATES.TemplateResponse(request, "detail.html", {
             "groups": FEATURE_GROUPS,
             "error": "Prediction failed. Please check your inputs.",
             "form_data": form
         })
     result = float(pred[0])
-    return TEMPLATES.TemplateResponse("detail.html", {
-        "request": request,
+    return TEMPLATES.TemplateResponse(request, "detail.html", {
         "groups": FEATURE_GROUPS,
         "prediction": result,
         "form_data": form
