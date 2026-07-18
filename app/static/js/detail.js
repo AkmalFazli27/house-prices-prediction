@@ -19,4 +19,8 @@
         item.classList.toggle('active', item.dataset.section === current);
     })
   }
+
+  window.addEventListener('scroll', updateActiveSession, { passive: true});
+  window.addEventListener('resize', updateActiveSession, { passive: true});
+  updateActiveSession();
 });
