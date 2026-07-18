@@ -1,0 +1,206 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #0F172A;
+  --on-primary: #FFFFFF;
+  --secondary: #0D9488;
+  --on-secondary: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-container: #F8FAFC;
+  --surface-container-low: #F1F5F9;
+  --on-surface: #1E293B;
+  --on-surface-variant: #64748B;
+  --outline: #E2E8F0;
+  --outline-variant: #CBD5E1;
+
+  --font-display: 'Hanken Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-label: 'JetBrains Mono', monospace;
+
+  --gutter: 24px;
+  --stack-sm: 12px;
+  --stack-md: 24px;
+  --stack-lg: 40px;
+  --margin-desktop: 48px;
+  --margin-mobile: 16px;
+  --container-max: 1280px;
+
+  --error: #ba1a1a;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--on-surface);
+  background: var(--surface);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--surface);
+  border-bottom: 1px solid var(--outline);
+  height: 64px;
+}
+
+.navbar .container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--margin-desktop);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: var(--stack-md);
+  list-style: none;
+}
+
+.navbar-links a {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--on-surface-variant);
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.navbar-links a:hover {
+  color: var(--secondary);
+}
+
+.navbar-links a.active {
+  color: var(--secondary);
+  border-bottom-color: var(--secondary);
+}
+
+@media (max-width: 768px) {
+  .navbar .container {
+    padding: 0 var(--margin-mobile);
+  }
+}
+
+/* Shared utility classes */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--outline);
+  border-radius: 8px;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.select-arrow {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+/* Predict button (shared between simple and detail) */
+.btn-predict {
+  width: 100%;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--primary);
+  color: var(--on-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.btn-predict:hover {
+  background: var(--secondary);
+}
+
+.btn-predict .material-symbols-outlined {
+  font-size: 20px;
+}
+
+/* Result / Error banners (shared between simple and detail) */
+.result-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(13, 148, 136, 0.08);
+  border: 1px solid var(--secondary);
+  border-radius: 8px;
+  padding: var(--stack-md);
+  margin-bottom: var(--stack-md);
+}
+
+.result-banner .material-symbols-outlined {
+  font-size: 28px;
+  color: var(--secondary);
+}
+
+.result-banner strong {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--on-surface);
+}
+
+.result-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-left: 8px;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(186, 26, 26, 0.08);
+  border: 1px solid var(--error);
+  border-radius: 8px;
+  padding: var(--stack-md);
+  margin-bottom: var(--stack-md);
+  color: var(--error);
+}
+
+.error-banner .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.error-banner span:last-child {
+  font-size: 0.875rem;
+}
