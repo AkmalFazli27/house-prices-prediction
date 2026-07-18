@@ -12,8 +12,6 @@ from .feature_data import FEATURE_GROUPS
 from pydantic import ValidationError
 from .model import HousePriceModel
 from .schemas import (
-    BatchHouseInput,
-    BatchPredictionOutput,
     HouseInput,
     PredictionOutput,
     SimpleHouseInput,
@@ -162,19 +160,6 @@ def predict_one(house: HouseInput):
         lower=result["lower"],
         upper=result["upper"],
     )
-
-@app.post("/predict/batch", response_model=BatchPredictionOutput)
-def predict_batch(batch: BatchHouseInput):
-    df = pd.DataFrame([h.model_dump(by_alias=True) for h in batch.houses])
-    
-    try:
-        preds = model.predict(df)
-    except Exception as e:
-        logger.error(f"Batch prediction failed: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail="Batch prediction failed")
-    
-    logger.info(f"Batch predict result: {len(preds)} predictions")
-    return BatchPredictionOutput(predictions=preds.tolist())
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):

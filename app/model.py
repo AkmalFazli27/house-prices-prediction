@@ -19,12 +19,6 @@ class HousePriceModel:
             MODEL_DIR / "stacking_regressor.pkl"
         )
 
-    def predict(self, df: pd.DataFrame) -> np.ndarray:
-        df_featured = engineer_features(df)
-        X = self.preprocessing_pipeline.transform(df_featured)
-        y_pred_log = self.stacking_regressor.predict(X)
-        return np.exp(y_pred_log)
-
     def predict_with_confidence(self, df: pd.DataFrame) -> dict:
         df_featured = engineer_features(df)
         X = self.preprocessing_pipeline.transform(df_featured)
