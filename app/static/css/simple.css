@@ -128,7 +128,6 @@
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--on-surface);
-  margin-bottom: var(--stack-sm);
 }
 
 .optional-badge {
