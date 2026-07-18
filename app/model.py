@@ -48,3 +48,58 @@ class HousePriceModel:
             "lower": lower,
             "upper": upper,
         }
+    
+    def simple_to_full(self, total_area, lot_area, totrmsabvgrd, bedroomabvgr,
+                       overallqual, house_age, garagecars, fireplaces, neighborhood,
+                       kitchenqual=None, exterqual=None, centralair=None,
+                       bsmtqual=None, lotfrontage=None) -> dict:
+
+        year_built = 2026 - house_age
+
+        bath_map = {
+            1: (1, 0, 0, 0),
+            2: (1, 1, 0, 0),
+            3: (2, 1, 0, 1),
+            4: (2, 1, 1, 1),
+            5: (3, 1, 1, 1),
+        }
+        full_bath, half_bath, bsmt_full, bsmt_half = bath_map.get(
+            bedroomabvgr, (2, 1, 0, 0)
+        )
+
+        return {
+            # === From simple form fields ===
+            "OverallQual":   overallqual,
+            "LotArea":       lot_area,
+            "Neighborhood":  neighborhood,
+            "BedroomAbvGr":  bedroomabvgr,
+            "TotRmsAbvGrd":  totrmsabvgrd,
+            "Fireplaces":    fireplaces,
+            "GarageCars":    garagecars,
+            "LotFrontage":   lotfrontage,
+            "KitchenQual":   kitchenqual,
+            "ExterQual":     exterqual,
+            "CentralAir":    centralair,
+            "BsmtQual":      bsmtqual,
+
+            # === engineer_features() needs all DROP_COLS to exist ===
+            "YearBuilt":     year_built,
+            "YearRemodAdd":  year_built,
+            "YrSold":        2026,
+            "1stFlrSF":      round(total_area, 2),
+            "2ndFlrSF":      0,
+            "BsmtFinSF1":    0,
+            "BsmtFinSF2":    0,
+            "GrLivArea":     round(total_area, 2),
+            "TotalBsmtSF":   0,
+            "FullBath":      full_bath,
+            "HalfBath":      half_bath,
+            "BsmtFullBath":  bsmt_full,
+            "BsmtHalfBath":  bsmt_half,
+            "OpenPorchSF":   0,
+            "3SsnPorch":     0,
+            "EnclosedPorch": 0,
+            "ScreenPorch":   0,
+            "WoodDeckSF":    0,
+            "GarageArea":    round(garagecars * 250, 2),
+        }
