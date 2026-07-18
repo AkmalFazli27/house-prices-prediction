@@ -73,7 +73,7 @@ async def detail_predict(request: Request):
         })
     df = pd.DataFrame([house.model_dump(by_alias=True)])
     try:
-        pred = model.predict(df)
+        result = model.predict_with_confidence(df)
     except Exception as e:
         logger.error(f"Detail prediction failed: {e}", exc_info=True)
         return TEMPLATES.TemplateResponse(request, "detail.html", {
@@ -81,10 +81,12 @@ async def detail_predict(request: Request):
             "error": "Prediction failed. Please check your inputs.",
             "form_data": form
         })
-    result = float(pred[0])
     return TEMPLATES.TemplateResponse(request, "detail.html", {
         "groups": FEATURE_GROUPS,
-        "prediction": result,
+        "prediction": result["prediction"],
+        "confidence": result["confidence"],
+        "lower": result["lower"],
+        "upper": result["upper"],
         "form_data": form
     })
 
@@ -100,14 +102,18 @@ def predict_one(house: HouseInput):
     df = pd.DataFrame([house.model_dump(by_alias=True)])
 
     try:
-        pred = model.predict(df)
+        result = model.predict_with_confidence(df)
     except Exception as e:
         logger.error(f"Prediction failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Prediction failed")
     
-    result = float(pred[0])
-    logger.info(f"Prediction result: ${result:.2f}")
-    return PredictionOutput(prediction=result)
+    logger.info(f"Prediction result: ${result['prediction']:.2f} (confidence: {result['confidence']}%)")
+    return PredictionOutput(
+        prediction=result["prediction"],
+        confidence=result["confidence"],
+        lower=result["lower"],
+        upper=result["upper"],
+    )
 
 @app.post("/predict/batch", response_model=BatchPredictionOutput)
 def predict_batch(batch: BatchHouseInput):

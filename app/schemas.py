@@ -115,6 +115,9 @@ class BatchHouseInput(BaseModel):
 
 class PredictionOutput(BaseModel):
     prediction: float
+    confidence: int
+    lower: float
+    upper: float
 
 class BatchPredictionOutput(BaseModel):
     predictions: list[float]
