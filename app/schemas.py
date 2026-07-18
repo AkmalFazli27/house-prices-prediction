@@ -110,6 +110,22 @@ class HouseInput(BaseModel):
             raise ValueError("The number of bedrooms cannot be negative.")
         return v
     
+class SimpleHouseInput(BaseModel):
+    total_area: float
+    lot_area: float
+    totrmsabvgrd: int
+    bedroomabvgr: int
+    overallqual: float
+    house_age: float
+    garagecars: int
+    fireplaces: int
+    neighborhood: str
+    kitchenqual: Optional[str] = None
+    exterqual: Optional[str] = None
+    centralair: Optional[str] = None
+    bsmtqual: Optional[str] = None
+    lotfrontage: Optional[float] = None
+
 class BatchHouseInput(BaseModel):
     houses: list[HouseInput]
 
