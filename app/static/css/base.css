@@ -230,3 +230,76 @@ body {
   font-size: 0.75rem;
   color: var(--on-surface-variant);
 }
+
+/* Prediction result card (dark) */
+.prediction-card {
+  background: var(--primary);
+  color: var(--on-primary);
+  border-radius: 12px;
+  padding: var(--stack-lg);
+  margin-bottom: var(--stack-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-md);
+}
+
+.prediction-card .prediction-label {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.prediction-card .prediction-value {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.prediction-card .prediction-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--stack-sm);
+}
+
+.prediction-card .confidence-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.prediction-card .confidence-high {
+  background: rgba(13, 148, 136, 0.25);
+  color: #5eead4;
+}
+
+.prediction-card .confidence-medium {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fcd34d;
+}
+
+.prediction-card .confidence-low {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+}
+
+.prediction-card .prediction-range {
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
+.prediction-card .prediction-range strong {
+  font-weight: 600;
+  opacity: 1;
+}
