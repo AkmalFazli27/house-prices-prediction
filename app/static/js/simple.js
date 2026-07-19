@@ -16,6 +16,8 @@
     updateFill();
   }
 
+  const predResult = document.getElementById("prediction-result");
+  if (predResult) predResult.scrollIntoView({ behavior: "smooth", block: "center" });
 }) ();
 
 // form validation + loading state
