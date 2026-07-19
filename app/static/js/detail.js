@@ -49,7 +49,20 @@
     sessionStorage.removeItem("detailScrollPos");
   }
 
+  // Persist prediction card across refresh
+  const predCard = document.querySelector(".prediction-card");
+  if (predCard) {
+    sessionStorage.setItem("detailPrediction", predCard.outerHTML);
+  } else if (!document.querySelector(".error-banner")) {
+    const saved = sessionStorage.getItem("detailPrediction");
+    if (saved) {
+      const section = document.querySelector(".detail-content");
+      if (section) section.insertAdjacentHTML("beforeend", saved);
+    }
+  }
+
   document.querySelector("form")?.addEventListener("submit", function () {
+    sessionStorage.removeItem("detailPrediction");
     sessionStorage.setItem("detailScrollPos", window.scrollY);
   });
 })();
