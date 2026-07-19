@@ -18,6 +18,7 @@
 
   function animateCounters() {
     document.querySelectorAll(".stat-value").forEach((el) => {
+      const suffix = el.textContent.includes("%") ? "%" : "";
       const target = parseFloat(el.textContent);
       if (isNaN(target)) return;
 
@@ -33,10 +34,11 @@
         const current = eased * target;
 
         // format: integer or 2 decimal
-        el.textContent =
+        const formatted =
           target % 1 === 0
             ? Math.round(current)
             : current.toFixed(target.toString().split(".")[1]?.length || 2);
+        el.textContent = formatted + suffix;
         if (progress < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
