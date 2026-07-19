@@ -42,4 +42,14 @@
       if (valueEl) valueEl.textContent = this.value;
     });
   });
+
+  const savedScroll = sessionStorage.getItem("detailScrollPos");
+  if (savedScroll) {
+    window.scrollTo({ top: parseInt(savedScroll, 10) });
+    sessionStorage.removeItem("detailScrollPos");
+  }
+
+  document.querySelector("form")?.addEventListener("submit", function () {
+    sessionStorage.setItem("detailScrollPos", window.scrollY);
+  });
 })();
