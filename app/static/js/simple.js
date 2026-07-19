@@ -16,23 +16,6 @@
     updateFill();
   }
 
-  const savedScroll = sessionStorage.getItem("simpleScrollPos");
-  if (savedScroll) {
-    window.scrollTo({ top: parseInt(savedScroll, 10) });
-    sessionStorage.removeItem("simpleScrollPos");
-  }
-
-  // Persist prediction card across refresh
-  const predCard = document.querySelector(".prediction-card");
-  if (predCard) {
-    sessionStorage.setItem("simplePrediction", predCard.outerHTML);
-  } else if (!document.querySelector(".error-banner")) {
-    const saved = sessionStorage.getItem("simplePrediction");
-    if (saved) {
-      const section = document.querySelector("section");
-      if (section) section.insertAdjacentHTML("beforeend", saved);
-    }
-  }
 }) ();
 
 // form validation + loading state
@@ -50,8 +33,6 @@ document.querySelector("form")?.addEventListener("submit", function (e) {
     e.preventDefault();
     return;
   }
-  sessionStorage.removeItem("simplePrediction");
-  sessionStorage.setItem("simpleScrollPos", window.scrollY);
   const btn = this.querySelector(".btn-predict");
   btn.disabled = true;
   btn.innerHTML = "Predicting...";

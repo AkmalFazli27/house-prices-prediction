@@ -1,12 +1,14 @@
 from contextlib import asynccontextmanager
+import secrets
 
 import pandas as pd
 import logging
 from pathlib import Path
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.middleware.sessions import SessionMiddleware
 
 from .feature_data import FEATURE_GROUPS
 from pydantic import ValidationError
@@ -41,6 +43,7 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title="House Prediction API", lifespan=lifespan)
+app.add_middleware(SessionMiddleware, secret_key=secrets.token_hex(32))
 
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
@@ -50,7 +53,20 @@ def home(request: Request):
 
 @app.get("/simple", response_class=HTMLResponse)
 def simple_form(request: Request):
-    return TEMPLATES.TemplateResponse(request, "simple.html")
+    ctx = {}
+    pred = request.session.pop("simple_prediction", None)
+    err = request.session.pop("simple_error", None)
+    form_data = request.session.pop("simple_form_data", None)
+    if pred:
+        ctx["prediction"] = pred["prediction"]
+        ctx["confidence"] = pred["confidence"]
+        ctx["lower"] = pred["lower"]
+        ctx["upper"] = pred["upper"]
+    if err:
+        ctx["error"] = err
+    if form_data:
+        ctx["form_data"] = form_data
+    return TEMPLATES.TemplateResponse(request, "simple.html", ctx)
 
 @app.post("/simple", response_class=HTMLResponse)
 async def simple_predict(request: Request):
@@ -62,10 +78,9 @@ async def simple_predict(request: Request):
     try:
         simple = SimpleHouseInput(**form)
     except ValidationError as e:
-        return TEMPLATES.TemplateResponse(request, "simple.html", {
-            "error": f"Invalid input: {e.errors()[0]['msg']}",
-            "form_data": form
-        })
+        request.session["simple_error"] = f"Invalid input: {e.errors()[0]['msg']}"
+        request.session["simple_form_data"] = form
+        return RedirectResponse(url="/simple", status_code=303)
     full = model.simple_to_full(
         total_area=simple.total_area,
         lot_area=simple.lot_area,
@@ -87,24 +102,36 @@ async def simple_predict(request: Request):
         result = model.predict_with_confidence(df)
     except Exception as e:
         logger.error(f"Simple prediction failed: {e}", exc_info=True)
-        return TEMPLATES.TemplateResponse(request, "simple.html", {
-            "error": "Prediction failed. Please check your inputs.",
-            "form_data": form
-        })
-    return TEMPLATES.TemplateResponse(request, "simple.html", {
+        request.session["simple_error"] = "Prediction failed. Please check your inputs."
+        request.session["simple_form_data"] = form
+        return RedirectResponse(url="/simple", status_code=303)
+    request.session["simple_prediction"] = {
         "prediction": result["prediction"],
         "confidence": result["confidence"],
         "lower": result["lower"],
         "upper": result["upper"],
-        "form_data": form
-    })
+    }
+    request.session["simple_form_data"] = form
+    return RedirectResponse(url="/simple", status_code=303)
 
 @app.get("/detail", response_class=HTMLResponse)
 def detail_form(request: Request):
-    return TEMPLATES.TemplateResponse(request, "detail.html", {
-        "groups": FEATURE_GROUPS,
-        "form_data": {}
-    })
+    ctx = {"groups": FEATURE_GROUPS}
+    pred = request.session.pop("detail_prediction", None)
+    err = request.session.pop("detail_error", None)
+    form_data = request.session.pop("detail_form_data", None)
+    if pred:
+        ctx["prediction"] = pred["prediction"]
+        ctx["confidence"] = pred["confidence"]
+        ctx["lower"] = pred["lower"]
+        ctx["upper"] = pred["upper"]
+    if err:
+        ctx["error"] = err
+    if form_data:
+        ctx["form_data"] = form_data
+    else:
+        ctx["form_data"] = {}
+    return TEMPLATES.TemplateResponse(request, "detail.html", ctx)
 
 @app.post("/detail", response_class=HTMLResponse)
 async def detail_predict(request: Request):
@@ -116,29 +143,25 @@ async def detail_predict(request: Request):
     try:
         house = HouseInput(**form)
     except ValidationError as e:
-        return TEMPLATES.TemplateResponse(request, "detail.html", {
-            "groups": FEATURE_GROUPS,
-            "error": f"Invalid input: {e.errors()[0]['msg']}",
-            "form_data": form
-        })
+        request.session["detail_error"] = f"Invalid input: {e.errors()[0]['msg']}"
+        request.session["detail_form_data"] = form
+        return RedirectResponse(url="/detail", status_code=303)
     df = pd.DataFrame([house.model_dump(by_alias=True)])
     try:
         result = model.predict_with_confidence(df)
     except Exception as e:
         logger.error(f"Detail prediction failed: {e}", exc_info=True)
-        return TEMPLATES.TemplateResponse(request, "detail.html", {
-            "groups": FEATURE_GROUPS,
-            "error": "Prediction failed. Please check your inputs.",
-            "form_data": form
-        })
-    return TEMPLATES.TemplateResponse(request, "detail.html", {
-        "groups": FEATURE_GROUPS,
+        request.session["detail_error"] = "Prediction failed. Please check your inputs."
+        request.session["detail_form_data"] = form
+        return RedirectResponse(url="/detail", status_code=303)
+    request.session["detail_prediction"] = {
         "prediction": result["prediction"],
         "confidence": result["confidence"],
         "lower": result["lower"],
         "upper": result["upper"],
-        "form_data": form
-    })
+    }
+    request.session["detail_form_data"] = form
+    return RedirectResponse(url="/detail", status_code=303)
 
 @app.get("/health")
 def health():
