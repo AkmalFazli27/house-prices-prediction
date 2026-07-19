@@ -3,18 +3,30 @@
   const navItems = document.querySelectorAll(".detail-sidebar-item");
 
   function updateActiveSection() {
+    const offset = 150;
     let current = "";
-    sections.forEach((section) => {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= 150) {
-        current = section.id.replace("section-", "");
-      }
-    });
+    const lastSection = sections[sections.length - 1];
 
-    if (!current && sections.length > 0) {
-      const last = sections[sections.length - 1];
-      current = last.id.replace("section-", "");
+    if (lastSection) {
+      const lastRect = lastSection.getBoundingClientRect();
+      if (lastRect.bottom <= window.innerHeight) {
+        current = lastSection.id.replace("section-", "");
+      }
     }
+
+    if (!current) {
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= offset) {
+          current = section.id.replace("section-", "");
+        }
+      });
+
+      if (!current && sections.length > 0) {
+        current = sections[0].id.replace("section-", "");
+      }
+    }
+
     navItems.forEach((item) => {
       item.classList.toggle("active", item.dataset.section === current);
     });
