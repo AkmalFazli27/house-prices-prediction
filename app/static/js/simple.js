@@ -22,3 +22,10 @@ document.querySelector("form")?.addEventListener("submit", function (e) {
   });
   if (!valid) e.preventDefault();
 });
+
+// loading state on submit
+document.querySelector('form')?.addEventListener('submit', function(e) {
+    const btn = this.querySelector('.btn-predict');
+    btn.disabled = true;
+    btn.innerHTML = 'Predicting...';
+});
