@@ -1,3 +1,4 @@
+// animate number when scroll to stats-section
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
