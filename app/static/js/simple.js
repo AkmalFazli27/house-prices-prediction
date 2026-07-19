@@ -9,7 +9,7 @@
   }
 }) ();
 
-// form validation
+// form validation + loading state
 document.querySelector("form")?.addEventListener("submit", function (e) {
   let valid = true;
   this.querySelectorAll("[required]").forEach((field) => {
@@ -20,12 +20,11 @@ document.querySelector("form")?.addEventListener("submit", function (e) {
       field.style.borderColor = "";
     }
   });
-  if (!valid) e.preventDefault();
-});
-
-// loading state on submit
-document.querySelector('form')?.addEventListener('submit', function(e) {
-    const btn = this.querySelector('.btn-predict');
-    btn.disabled = true;
-    btn.innerHTML = 'Predicting...';
+  if (!valid) {
+    e.preventDefault();
+    return;
+  }
+  const btn = this.querySelector(".btn-predict");
+  btn.disabled = true;
+  btn.innerHTML = "Predicting...";
 });
