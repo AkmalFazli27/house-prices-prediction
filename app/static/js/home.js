@@ -11,8 +11,37 @@
         }
       });
     },
-    { threshold: 0.5 },
+    { threshold: 0.4 },
   );
+
+  observer.observe(stats);
+
+  function animateCounters() {
+    document.querySelectorAll(".stat-value").forEach((el) => {
+      const target = parseFloat(el.textContent);
+      if (isNaN(target)) return;
+
+      const duration = 1200;
+      const start = performance.now();
+
+      function step(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // ease-out cubic
+        const eased = 1 - Math.min(elapsed / duration, 1);
+        const current = eased * target;
+
+        // format: integer or 2 decimal
+        el.textContent =
+          target % 1 === 0
+            ? Math.round(current)
+            : current.toFixed(target.toString().split(".")[1]?.length || 2);
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
 });
 
 const statsSection = document.querySelector(".stats-section");
