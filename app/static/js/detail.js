@@ -2,7 +2,7 @@
   const sections = document.querySelectorAll(".detail-section");
   const navItems = document.querySelectorAll(".detail-sidebar-item");
 
-  function updateActiveSession() {
+  function updateActiveSection() {
     let current = "";
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
@@ -24,7 +24,7 @@
   window.addEventListener("resize", updateActiveSession, { passive: true });
   updateActiveSession();
 
-  document.querySelector('input[type="range"]').forEach((slide) => {
+  document.querySelectorAll('input[type="range"]').forEach((slider) => {
     slider.addEventListener("input", function () {
       const valueEl = document.getElementById(this.id + "-value");
       if (valueEl) valueEl.textContent = this.value;
