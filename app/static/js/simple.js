@@ -7,7 +7,7 @@
       value.textContent = this.value;
     });
   }
-});
+}) ();
 
 // form validation
 document.querySelector("form")?.addEventListener("submit", function (e) {
