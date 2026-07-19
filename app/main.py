@@ -44,6 +44,10 @@ app = FastAPI(title="House Prediction API", lifespan=lifespan)
 
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return TEMPLATES.TemplateResponse(request, "index.html")
+
 @app.get("/simple", response_class=HTMLResponse)
 def simple_form(request: Request):
     return TEMPLATES.TemplateResponse(request, "simple.html")
