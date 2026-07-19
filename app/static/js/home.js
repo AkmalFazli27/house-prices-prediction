@@ -10,5 +10,12 @@ const observer = new IntersectionObserver(
   { threshold: 0.5 },
 );
 
-const statsSection = document.querySelector('.stats-section');
+const statsSection = document.querySelector(".stats-section");
 if (statsSection) observer.observe(statsSection);
+
+function animateStats() {
+  document.querySelectorAll(".stat-value").forEach((el) => {
+    const target = parseFloat(el.textContent);
+    // animate from 0 to target
+  });
+}
