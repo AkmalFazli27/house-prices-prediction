@@ -20,9 +20,9 @@
     });
   }
 
-  window.addEventListener("scroll", updateActiveSession, { passive: true });
-  window.addEventListener("resize", updateActiveSession, { passive: true });
-  updateActiveSession();
+  window.addEventListener("scroll", updateActiveSection, { passive: true });
+  window.addEventListener("resize", updateActiveSection, { passive: true });
+  updateActiveSection();
 
   document.querySelectorAll('input[type="range"]').forEach((slider) => {
     slider.addEventListener("input", function () {
