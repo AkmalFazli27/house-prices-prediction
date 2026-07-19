@@ -213,9 +213,11 @@
 
       {% if prediction %}
       <div class="prediction-card">
-        <div class="prediction-label">Estimated Price</div>
-        <div class="prediction-value">${{ "{:,.0f}".format(prediction) }}</div>
-        <div class="prediction-meta">
+        <div>
+          <div class="prediction-label">Estimated Price</div>
+          <div class="prediction-value">${{ "{:,.0f}".format(prediction) }}</div>
+        </div>
+        <div class="prediction-right">
           <span class="confidence-badge confidence-{{ 'high' if confidence >= 80 else 'medium' if confidence >= 50 else 'low' }}">
             <span class="material-symbols-outlined" style="font-size:16px;">verified</span>
             {{ confidence }}% Confidence
