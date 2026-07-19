@@ -250,7 +250,7 @@ body {
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.75;
+  color: #6bd8cb;
   margin-bottom: 4px;
 }
 
@@ -298,11 +298,15 @@ body {
 
 .prediction-card .prediction-range {
   font-size: 0.875rem;
-  opacity: 0.8;
+  color: #6bd8cb;
   text-align: right;
 }
 
 .prediction-card .prediction-range strong {
   font-weight: 600;
-  opacity: 1;
+  color: #fff;
+}
+
+.prediction-card .prediction-range .prediction-sep {
+  color: #fff;
 }
