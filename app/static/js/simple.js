@@ -7,6 +7,12 @@
       value.textContent = this.value;
     });
   }
+
+  const savedScroll = sessionStorage.getItem("simpleScrollPos");
+  if (savedScroll) {
+    window.scrollTo({ top: parseInt(savedScroll, 10) });
+    sessionStorage.removeItem("simpleScrollPos");
+  }
 }) ();
 
 // form validation + loading state
@@ -24,6 +30,7 @@ document.querySelector("form")?.addEventListener("submit", function (e) {
     e.preventDefault();
     return;
   }
+  sessionStorage.setItem("simpleScrollPos", window.scrollY);
   const btn = this.querySelector(".btn-predict");
   btn.disabled = true;
   btn.innerHTML = "Predicting...";
