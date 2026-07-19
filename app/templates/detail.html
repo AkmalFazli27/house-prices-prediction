@@ -48,29 +48,6 @@
         <p>Complete all 79 parameters for the most accurate Ames, IA property valuation.</p>
       </div>
 
-      {% if prediction %}
-      <div class="result-banner">
-        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-        <div class="result-body">
-          <strong>Estimated Price:</strong>
-          <span class="result-value">${{ "{:,.0f}".format(prediction) }}</span>
-          <div class="result-meta">
-            <span class="confidence-badge confidence-{{ 'high' if confidence >= 80 else 'medium' if confidence >= 50 else 'low' }}">
-              {{ confidence }}% Confidence
-            </span>
-            <span class="result-range">
-              Range: ${{ "{:,.0f}".format(lower) }} – ${{ "{:,.0f}".format(upper) }}
-            </span>
-          </div>
-        </div>
-      </div>
-      {% elif error %}
-      <div class="error-banner">
-        <span class="material-symbols-outlined" aria-hidden="true">error</span>
-        <span>{{ error }}</span>
-      </div>
-      {% endif %}
-
       <form action="/detail" method="POST">
 
         {% for group in groups %}
@@ -129,6 +106,27 @@
         </div>
 
       </form>
+
+      {% if prediction %}
+      <div class="prediction-card">
+        <div class="prediction-label">Estimated Price</div>
+        <div class="prediction-value">${{ "{:,.0f}".format(prediction) }}</div>
+        <div class="prediction-meta">
+          <span class="confidence-badge confidence-{{ 'high' if confidence >= 80 else 'medium' if confidence >= 50 else 'low' }}">
+            <span class="material-symbols-outlined" style="font-size:16px;">verified</span>
+            {{ confidence }}% Confidence
+          </span>
+          <span class="prediction-range">
+            Range: <strong>${{ "{:,.0f}".format(lower) }}</strong> – <strong>${{ "{:,.0f}".format(upper) }}</strong>
+          </span>
+        </div>
+      </div>
+      {% elif error %}
+      <div class="error-banner">
+        <span class="material-symbols-outlined" aria-hidden="true">error</span>
+        <span>{{ error }}</span>
+      </div>
+      {% endif %}
     </section>
 
   </main>
