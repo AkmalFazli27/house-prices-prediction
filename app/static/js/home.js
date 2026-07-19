@@ -6,7 +6,7 @@
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          animateStats();
+          animateCounters();
           observer.disconnect();
         }
       });
@@ -29,7 +29,7 @@
         const progress = Math.min(elapsed / duration, 1);
 
         // ease-out cubic
-        const eased = 1 - Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
         const current = eased * target;
 
         // format: integer or 2 decimal
@@ -42,14 +42,4 @@
       requestAnimationFrame(step);
     });
   }
-});
-
-const statsSection = document.querySelector(".stats-section");
-if (statsSection) observer.observe(statsSection);
-
-function animateStats() {
-  document.querySelectorAll(".stat-value").forEach((el) => {
-    const target = parseFloat(el.textContent);
-    // animate from 0 to target
-  });
-}
+}) ();
