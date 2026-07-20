@@ -51,6 +51,10 @@ app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="stat
 def home(request: Request):
     return TEMPLATES.TemplateResponse(request, "index.html")
 
+@app.get("/about", response_class=HTMLResponse)
+def about(request: Request):
+    return TEMPLATES.TemplateResponse(request, "about.html")
+
 @app.get("/simple", response_class=HTMLResponse)
 def simple_form(request: Request):
     ctx = {}
