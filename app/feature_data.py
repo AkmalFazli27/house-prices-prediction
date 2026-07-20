@@ -96,8 +96,8 @@ FEATURE_GROUPS = [
                          ("2Story", "Two Story"), ("2.5Fin", "Two and One-Half Story (2nd level finished)"),
                          ("2.5Unf", "Two and One-Half Story (2nd level unfinished)"),
                          ("SFoyer", "Split Foyer"), ("SLvl", "Split Level")]},
-            {"name": "OverallQual", "label": "Overall Quality", "type": "range", "min": 1, "max": 10, "value": 5},
-            {"name": "OverallCond", "label": "Overall Condition", "type": "range", "min": 1, "max": 10, "value": 5},
+            {"name": "OverallQual", "label": "Overall Quality", "type": "range", "min": 0, "max": 10, "value": 5},
+            {"name": "OverallCond", "label": "Overall Condition", "type": "range", "min": 0, "max": 10, "value": 5},
             {"name": "YearBuilt", "label": "Year Built", "type": "number", "placeholder": "e.g. 2005"},
             {"name": "YearRemodAdd", "label": "Year Remodeled", "type": "number", "placeholder": "Leave blank if never remodeled"},
         ]
