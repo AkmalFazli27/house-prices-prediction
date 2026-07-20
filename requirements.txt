@@ -5,3 +5,7 @@ xgboost
 catboost
 lightgbm
 itsdangerous
+fastapi
+uvicorn[standard]
+jinja2
+python-multipart
