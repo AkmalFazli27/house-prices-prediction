@@ -1,10 +1,22 @@
 from pathlib import Path
+import logging
+
 import joblib
 import numpy as np
 import pandas as pd
 
 from .features import engineer_features
+from .model_download import download_file
+
+logger = logging.getLogger(__name__)
+
 MODEL_DIR = Path(__file__).resolve().parent.parent / "models"
+
+STACKINGRegressor_URL = (
+    "https://github.com/AkmalFazli27/house-prices-prediction"
+    "/releases/download/v1.0/stacking_regressor.pkl"
+)
+
 
 class HousePriceModel:
     def __init__(self):
@@ -12,12 +24,14 @@ class HousePriceModel:
         self.stacking_regressor = None
 
     def load(self):
+        stacking_path = MODEL_DIR / "stacking_regressor.pkl"
+        download_file(STACKINGRegressor_URL, stacking_path, skip_if_exists=True)
+
         self.preprocessing_pipeline = joblib.load(
             MODEL_DIR / "preprocessing_pipeline.pkl"
         )
-        self.stacking_regressor = joblib.load(
-            MODEL_DIR / "stacking_regressor.pkl"
-        )
+        self.stacking_regressor = joblib.load(stacking_path)
+        logger.info("Models loaded successfully.")
 
     def predict_with_confidence(self, df: pd.DataFrame) -> dict:
         df_featured = engineer_features(df)
@@ -42,7 +56,7 @@ class HousePriceModel:
             "lower": lower,
             "upper": upper,
         }
-    
+
     def simple_to_full(self, total_area, lot_area, totrmsabvgrd, bedroomabvgr,
                        overallqual, house_age, garagecars, fireplaces, neighborhood,
                        kitchenqual=None, exterqual=None, centralair=None,
@@ -62,7 +76,6 @@ class HousePriceModel:
         )
 
         return {
-            # === From simple form fields ===
             "OverallQual":   overallqual,
             "LotArea":       lot_area,
             "Neighborhood":  neighborhood,
@@ -75,8 +88,6 @@ class HousePriceModel:
             "ExterQual":     exterqual,
             "CentralAir":    centralair,
             "BsmtQual":      bsmtqual,
-
-            # === engineer_features() needs all DROP_COLS to exist ===
             "YearBuilt":     year_built,
             "YearRemodAdd":  year_built,
             "YrSold":        2026,
@@ -96,8 +107,6 @@ class HousePriceModel:
             "ScreenPorch":   0,
             "WoodDeckSF":    0,
             "GarageArea":    round(garagecars * 250, 2),
-
-            # === All other columns set to None (handled by pipeline imputers) ===
             "MSSubClass":    None,
             "MSZoning":      None,
             "Street":        None,
