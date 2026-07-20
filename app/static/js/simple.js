@@ -4,7 +4,7 @@
   const value = document.getElementById("overallqual-value");
   if (slider && value) {
     function updateFill() {
-      const min = +slider.min || 1;
+      const min = +slider.min;
       const max = +slider.max || 10;
       const pct = ((slider.value - min) / (max - min)) * 100;
       slider.style.background = `linear-gradient(to right, var(--secondary) ${pct}%, var(--outline) ${pct}%)`;
