@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 MODEL_DIR = Path(__file__).resolve().parent.parent / "models"
 
-STACKINGRegressor_URL = (
+STACKING_REGRESSOR_URL = (
     "https://github.com/AkmalFazli27/house-prices-prediction"
     "/releases/download/v1.0/stacking_regressor.pkl"
 )
@@ -25,7 +25,7 @@ class HousePriceModel:
 
     def load(self):
         stacking_path = MODEL_DIR / "stacking_regressor.pkl"
-        download_file(STACKINGRegressor_URL, stacking_path, skip_if_exists=True)
+        download_file(STACKING_REGRESSOR_URL, stacking_path, skip_if_exists=True)
 
         self.preprocessing_pipeline = joblib.load(
             MODEL_DIR / "preprocessing_pipeline.pkl"
