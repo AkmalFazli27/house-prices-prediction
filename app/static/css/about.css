@@ -190,6 +190,11 @@
   color: var(--on-surface);
 }
 
+/* Tech section background */
+.about-tech-section {
+  background: var(--surface-container-low);
+}
+
 /* Stats (same as homepage) */
 .about-stats-section {
   background: var(--surface-container-low);

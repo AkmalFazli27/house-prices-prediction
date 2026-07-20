@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Omah.AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/base.css') }}?v=2">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/about.css') }}?v=1">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-logo">Omah.AI</a>
+      <ul class="navbar-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/simple">Quick Mode</a></li>
+        <li><a href="/detail">Detailed Mode</a></li>
+        <li><a href="/about" class="active" aria-current="page">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="about-hero">
+      <div class="container">
+        <div class="about-hero-badge">Ames, Iowa &mdash; AI-Powered Valuation</div>
+        <h1>About Omah.AI</h1>
+        <p>Omah.AI is an AI-powered house price prediction application for Ames, Iowa. Built using the Ames Housing Dataset with 79 explanatory variables, it delivers accurate property valuations through an ensemble of machine learning models.</p>
+      </div>
+    </section>
+
+    <!-- ML Pipeline -->
+    <section class="about-section">
+      <div class="container">
+        <h2 class="about-section-title">Machine Learning Pipeline</h2>
+        <div class="pipeline-flow">
+          <div class="pipeline-step">
+            <div class="pipeline-step-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">database</span>
+            </div>
+            <div class="pipeline-step-label">Raw Data</div>
+            <div class="pipeline-step-desc">Ames Housing Dataset with 2,919 records and 79 features</div>
+          </div>
+          <div class="pipeline-arrow">
+            <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-step-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">cleaning_services</span>
+            </div>
+            <div class="pipeline-step-label">Data Cleaning</div>
+            <div class="pipeline-step-desc">Handle missing values, remove duplicates, transform target</div>
+          </div>
+          <div class="pipeline-arrow">
+            <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-step-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">construction</span>
+            </div>
+            <div class="pipeline-step-label">Feature Engineering</div>
+            <div class="pipeline-step-desc">Create new features, encode categories, scale data</div>
+          </div>
+          <div class="pipeline-arrow">
+            <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-step-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">model_training</span>
+            </div>
+            <div class="pipeline-step-label">Model Training</div>
+            <div class="pipeline-step-desc">Stacking Regressor with 5 base estimators</div>
+          </div>
+          <div class="pipeline-arrow">
+            <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-step-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">trending_up</span>
+            </div>
+            <div class="pipeline-step-label">Prediction</div>
+            <div class="pipeline-step-desc">Accurate price estimate with confidence score</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technologies -->
+    <section class="about-section about-tech-section">
+      <div class="container">
+        <h2 class="about-section-title">Technologies</h2>
+        <div class="tech-grid">
+          <div class="tech-item">
+            <div class="tech-item-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">code</span>
+            </div>
+            <div class="tech-item-name">Python</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-item-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">web</span>
+            </div>
+            <div class="tech-item-name">FastAPI</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-item-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
+            </div>
+            <div class="tech-item-name">scikit-learn</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-item-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">trending_up</span>
+            </div>
+            <div class="tech-item-name">XGBoost</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-item-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">gradient</span>
+            </div>
+            <div class="tech-item-name">LightGBM</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-item-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">category</span>
+            </div>
+            <div class="tech-item-name">CatBoost</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-item-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">html</span>
+            </div>
+            <div class="tech-item-name">Jinja2</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-item-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">cloud</span>
+            </div>
+            <div class="tech-item-name">Render</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Model Performance -->
+    <section class="about-section about-stats-section">
+      <div class="container">
+        <h2 class="about-section-title">Model Performance</h2>
+        <div class="about-stats-grid">
+          <div class="about-stat-card">
+            <span class="about-stat-card-icon material-symbols-outlined" aria-hidden="true">reliability</span>
+            <span class="stat-value">8.25%</span>
+            <span class="stat-label">Avg Error</span>
+          </div>
+          <div class="about-stat-card">
+            <span class="about-stat-card-icon material-symbols-outlined" aria-hidden="true">trending_up</span>
+            <span class="stat-value">0.1197</span>
+            <span class="stat-label">RMSE Score</span>
+          </div>
+          <div class="about-stat-card">
+            <span class="about-stat-card-icon material-symbols-outlined" aria-hidden="true">layers</span>
+            <span class="stat-value">0.9061</span>
+            <span class="stat-label">R&sup2; Score</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Developer -->
+    <section class="about-section">
+      <div class="container">
+        <h2 class="about-section-title">Developer</h2>
+        <div class="developer-card">
+          <div class="developer-name">Akmal Fazli</div>
+          <div class="developer-role">Developer</div>
+          <div class="developer-links">
+            <a href="https://github.com/AkmalFazli27" target="_blank" rel="noopener noreferrer" class="developer-link" aria-label="GitHub">
+              <span class="material-symbols-outlined" aria-hidden="true">code</span>
+            </a>
+            <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" class="developer-link" aria-label="LinkedIn">
+              <span class="material-symbols-outlined" aria-hidden="true">link</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
