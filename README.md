@@ -1,67 +1,153 @@
-# 🏠 House Price Prediction
+# 🏠 Ames House Price Prediction
 
-This project aims to build a machine learning model that can predict house prices based on features such as lot area, number of rooms, location, and other attributes. The dataset used is the **House Prices** dataset (from Kaggle or similar public sources).
+An end-to-end data science project that predicts house prices using machine learning, from data exploration to a deployed web application.
 
----
-
-## 📂 Project Structure
-
-<pre class="overflow-visible!" data-start="103" data-end="938"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span></span><span>house-prices-prediction/
-│
-├── data/   
-│   ├── raw/              </span><span># original dataset (do not modify)</span><span>
-│   │   └── house_prices.csv
-│   │
-│   ├── processed/        </span><span># cleaned dataset</span><span>
-│   │   └── cleaned_data.csv
-│   │
-│   └── features/         </span><span># dataset after feature engineering</span><span>
-│       └── engineered_data.csv
-│
-├── notebooks/  
-│   ├── </span><span>1_</span><span>data_cleaning.ipynb       </span><span># data cleaning</span><span>
-│   ├── </span><span>2_</span><span>feature_engineering.ipynb </span><span># encoding, transformation</span><span>
-│   └── </span><span>3_</span><span>modeling.ipynb            </span><span># model training & evaluation</span><span>
-│
-├── models/   
-│   └── preprocessing_pipeline.pkl       </span><span># preprocessing pipeline model</span><span>
-|   └── stacking_regressor.pkl       </span><span># trained model</span><span>
-│
-└── requirements.txt                </span><span># list of required libraries</span></span></code></div></div></pre>
+**🔗 Live App:** [https://ames-house-price-prediction-0f33.onrender.com/](https://ames-house-price-prediction-0f33.onrender.com/)
 
 ---
 
-## ⚙️ Installation
+## 📊 Overview
 
-Clone this repository and install the required dependencies:
+This project predicts house prices in Ames, Iowa based on 79 explanatory variables describing residential homes. The workflow covers the complete data science pipeline:
 
-<pre class="overflow-visible!" data-start="1297" data-end="1431"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-bash"><span><span>git </span><span>clone</span><span> https://github.com/username/house-price-prediction.git
-</span><span>cd</span><span> house-price-prediction
-pip install -r requirements.txt</span></span></code></div></div></pre>
+1. **Data Cleaning** — Handle missing values, remove duplicates
+2. **Feature Engineering** — Create new features, encode categorical variables
+3. **Model Training** — Train and evaluate multiple regression models
+4. **Model Deployment** — Deploy as a web application on Render
 
 ---
 
-## 📝 Project Workflow
+## 📁 Project Structure
 
-1. **Exploratory Data Analysis (EDA)**
-   * Analyze the raw dataset.
-   * Visualize price distribution, feature correlations, and detect outliers.
-2. **Data Cleaning**
-   * Handle missing values.
-   * Remove duplicates.
-   * Transform target distribution (e.g., `log1p(SalePrice)`).
-3. **Feature Engineering**
-   * Encode categorical variables.
-   * Create new features (e.g., total area).
-   * Apply scaling and normalization if needed.
-4. **Modeling**
-   * Train regression models (Linear Regression, Random Forest, XGBoost, etc.).
-   * Evaluate performance using metrics such as RMSE and R².
-5. **Reporting**
-   * Save the trained model in `models/`.
+```
+house-prices-prediction/
+│
+├── data/
+│   ├── raw/                    # Original dataset (do not modify)
+│   │   ├── train.csv
+│   │   └── test.csv
+│   ├── processed/              # Cleaned dataset
+│   │   ├── cleaned_train.csv
+│   │   └── cleaned_test.csv
+│   ├── features/               # Dataset after feature engineering
+│   │   ├── featured_train.csv
+│   │   └── featured_test.csv
+│   ├── submission/             # Kaggle submission files
+│   │   └── submission.csv
+│   └── data_description.txt    # Dataset documentation
+│
+├── notebooks/
+│   ├── data_cleaning.ipynb         # Step 1: Data cleaning
+│   ├── feature_engineering.ipynb   # Step 2: Feature engineering
+│   └── modeling.ipynb              # Step 3: Model training & evaluation
+│
+├── app/                        # FastAPI web application
+│   ├── main.py                 # App entrypoint & routes
+│   ├── model.py                # Model loading & prediction logic
+│   ├── model_download.py       # Download model from GitHub Releases
+│   ├── features.py             # Feature engineering pipeline
+│   ├── schemas.py              # Pydantic models for API
+│   ├── feature_data.py         # Form field definitions
+│   ├── templates/              # Jinja2 HTML templates
+│   └── static/                 # CSS, JS, images
+│
+├── models/
+│   └── preprocessing_pipeline.pkl  # Preprocessing pipeline (17KB)
+│   # stacking_regressor.pkl downloaded at runtime from GitHub Releases
+│
+├── tests/
+│   └── test_model_download.py  # Unit tests for model download
+│
+├── requirements.txt            # Python dependencies
+├── Procfile                    # Render start command
+└── render.yaml                 # Render service config
+```
+
+---
+
+## 🚀 Quick Start
+
+### Option 1: Run Locally
+
+```bash
+# Clone the repository
+git clone https://github.com/AkmalFazli27/house-prices-prediction.git
+cd house-prices-prediction
+
+# Create virtual environment
+python -m venv venv
+venv\Scripts\activate          # Windows
+# source venv/bin/activate    # macOS/Linux
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+uvicorn app.main:app --reload --port 8000
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
+
+### Option 2: Use the Live App
+
+Visit [https://ames-house-price-prediction-0f33.onrender.com/](https://ames-house-price-prediction-0f33.onrender.com/) to use the app directly.
+
+---
+
+## 📓 Notebook Pipeline
+
+Run these notebooks in order:
+
+| Step | Notebook | Description |
+|------|----------|-------------|
+| 1 | `notebooks/data_cleaning.ipynb` | Handle missing values, remove duplicates, transform target |
+| 2 | `notebooks/feature_engineering.ipynb` | Encode categories, create new features, scaling |
+| 3 | `notebooks/modeling.ipynb` | Train models (XGBoost, LightGBM, CatBoost), evaluate with RMSE |
+
+---
+
+## 🤖 Model
+
+The model uses a **Stacking Regressor** with 5 base estimators:
+- GradientBoostingRegressor
+- XGBRegressor
+- CatBoostRegressor
+- LGBMRegressor
+- RandomForestRegressor
+
+**Final estimator:** VotingRegressor
+
+**Key Features Created:**
+- `HouseAge`, `HouseRemodelAge`
+- `TotalSF`, `TotalArea`
+- `TotalBaths`, `TotalPorchSF`
+
+---
+
+## 🌐 Web App Features
+
+- **Quick Mode** — Predict with 14 essential inputs
+- **Detailed Mode** — Full 79-field form for accurate predictions
+- **Confidence Score** — Shows prediction reliability (0-100%)
+- **Estimated Price Range** — Predicted price with variability estimate based on base estimator spread
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** Python, FastAPI, Uvicorn
+- **ML:** scikit-learn, XGBoost, LightGBM, CatBoost
+- **Frontend:** Jinja2, HTML, CSS, JavaScript
+- **Deployment:** Render, GitHub Releases (model storage)
+
+---
+
+## 📜 License
+
+This project is for educational purposes.
 
 ---
 
 ## 👨‍💻 Author
 
-Developed by **Akmal Fazli** as a machine learning learning project.
+Developed by **Akmal Fazli** as an end-to-end data science project.
