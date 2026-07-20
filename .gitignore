@@ -10,3 +10,4 @@ docs/
 stitch_house_price_predictor/
 .opencode
 .superpowers
+models/stacking_regressor.pkl
