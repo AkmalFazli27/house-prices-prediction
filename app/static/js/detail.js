@@ -5,26 +5,19 @@
   function updateActiveSection() {
     const offset = 150;
     let current = "";
-    const lastSection = sections[sections.length - 1];
 
-    if (lastSection) {
-      const lastRect = lastSection.getBoundingClientRect();
-      if (lastRect.bottom <= window.innerHeight) {
-        current = lastSection.id.replace("section-", "");
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= offset) {
+        current = section.id.replace("section-", "");
       }
-    }
+    });
 
-    if (!current) {
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= offset) {
-          current = section.id.replace("section-", "");
-        }
-      });
-
-      if (!current && sections.length > 0) {
-        current = sections[0].id.replace("section-", "");
-      }
+    if (!current && sections.length > 0) {
+      const last = sections[sections.length - 1].getBoundingClientRect();
+      current = last.bottom <= window.innerHeight
+        ? sections[sections.length - 1].id.replace("section-", "")
+        : sections[0].id.replace("section-", "");
     }
 
     navItems.forEach((item) => {
