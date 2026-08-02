@@ -8,122 +8,108 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=block" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/base.css') }}?v=2">
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/home.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/tailwind.css') }}">
   <script src="{{ url_for('static', path='/js/home.js') }}?v=3" defer></script>
 </head>
 <body>
-
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container">
-      <a href="/" class="navbar-logo">Omah.AI</a>
-      <ul class="navbar-links">
-        <li><a href="/" class="active" aria-current="page">Home</a></li>
-        <li><a href="/simple">Quick Mode</a></li>
-        <li><a href="/detail">Detailed Mode</a></li>
-        <li><a href="/about">About</a></li>
-      </ul>
-    </div>
-  </nav>
+  {% set active_nav = 'home' %}
+  {% include 'components/navbar.html' %}
 
   <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-badge">Ames, Iowa &mdash; AI-Powered Valuation</div>
-        <h1>Predict Your Home Price in Ames with AI</h1>
-        <p>Machine learning models trained on the Ames Housing dataset deliver accurate property valuations for Ames, Iowa. Choose the analysis depth that fits your needs.</p>
+    <section class="pt-[60px] pb-10 text-center">
+      <div class="max-w-7xl mx-auto px-6">
+        <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-accent/10 text-accent border border-accent/15 font-label text-xs font-medium tracking-widest uppercase mb-6">Ames, Iowa &mdash; AI-Powered Valuation</span>
+        <h1 class="font-display text-3xl md:text-[3rem] font-bold leading-tight tracking-tight text-onsurface max-w-[900px] mx-auto mb-6">Predict Your Home Price in Ames with AI</h1>
+        <p class="text-base md:text-lg leading-relaxed text-onsurfacevariant max-w-[600px] mx-auto">Machine learning models trained on the Ames Housing dataset deliver accurate property valuations for Ames, Iowa. Choose the analysis depth that fits your needs.</p>
       </div>
     </section>
 
-    <!-- Mode Cards -->
-    <section class="mode-section">
-      <div class="container">
-        <div class="mode-grid">
-          <!-- Simple Mode -->
-          <div class="mode-card">
-            <div class="mode-card-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">speed</span>
+    <section class="pb-20">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[900px] mx-auto">
+          <div class="mode-card bg-white border border-outline rounded-lg p-10 flex flex-col items-start text-left transition-transform duration-300 hover:-translate-y-1 hover:border-accent">
+            <div class="mode-card-icon w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center mb-6 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-2xl" aria-hidden="true">speed</span>
             </div>
-            <h2>Quick Mode</h2>
-            <p>Quick analysis using 15 key features like neighborhood, size, and quality. Trained on real Ames, IA market data.</p>
-            <a href="/simple" class="btn">
-              Get Started <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            <h2 class="font-display text-2xl font-medium mb-3 text-onsurface">Quick Mode</h2>
+            <p class="text-sm leading-relaxed text-onsurfacevariant mb-6 flex-1">Quick analysis using 15 key features like neighborhood, size, and quality. Trained on real Ames, IA market data.</p>
+            <a href="/simple" class="btn w-full py-3 px-6 rounded-md font-body text-base font-semibold cursor-pointer bg-primary text-white flex items-center justify-center gap-2 transition-colors duration-200 hover:bg-accent no-underline">
+              Get Started <span class="material-symbols-outlined text-xl" aria-hidden="true">arrow_forward</span>
             </a>
           </div>
 
-          <!-- Detail Mode -->
-          <div class="mode-card">
-            <div class="mode-card-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">analytics</span>
+          <div class="mode-card bg-white border border-outline rounded-lg p-10 flex flex-col items-start text-left transition-transform duration-300 hover:-translate-y-1 hover:border-accent group">
+            <div class="mode-card-icon w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center mb-6 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-2xl" aria-hidden="true">analytics</span>
             </div>
-            <h2>Detailed Mode</h2>
-            <p>Full analysis with all 79 property parameters trained on the complete Ames, IA housing dataset.</p>
-            <a href="/detail" class="btn">
-              Deep Analysis <span class="material-symbols-outlined" aria-hidden="true">precision_manufacturing</span>
+            <h2 class="font-display text-2xl font-medium mb-3 text-onsurface">Detailed Mode</h2>
+            <p class="text-sm leading-relaxed text-onsurfacevariant mb-6 flex-1">Full analysis with all 79 property parameters trained on the complete Ames, IA housing dataset.</p>
+            <a href="/detail" class="btn w-full py-3 px-6 rounded-md font-body text-base font-semibold cursor-pointer bg-primary text-white flex items-center justify-center gap-2 transition-colors duration-200 hover:bg-accent no-underline">
+              Deep Analysis <span class="material-symbols-outlined text-xl" aria-hidden="true">precision_manufacturing</span>
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Stats Bar -->
-    <section class="stats-section">
-      <div class="container">
-        <div class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-card-icon material-symbols-outlined" aria-hidden="true">reliability</span>
-            <span class="stat-value">8.25%</span>
-            <span class="stat-label">Avg Error</span>
+    <section class="stats-section bg-slate-100 py-10">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[900px] mx-auto">
+          <div class="stat-card text-center p-6">
+            <span class="stat-card-icon text-[2rem] text-accent mb-3 flex items-center justify-center material-symbols-outlined" aria-hidden="true">reliability</span>
+            <span class="stat-value font-display text-[2rem] font-bold text-onsurface block">8.25%</span>
+            <span class="stat-label font-label text-xs font-medium tracking-widest uppercase text-onsurfacevariant mt-1 block">Avg Error</span>
           </div>
-          <div class="stat-card">
-            <span class="stat-card-icon material-symbols-outlined" aria-hidden="true">trending_up</span>
-            <span class="stat-value">0.1197</span>
-            <span class="stat-label">RMSE Score</span>
+          <div class="stat-card text-center p-6">
+            <span class="stat-card-icon text-[2rem] text-accent mb-3 flex items-center justify-center material-symbols-outlined" aria-hidden="true">trending_up</span>
+            <span class="stat-value font-display text-[2rem] font-bold text-onsurface block">0.1197</span>
+            <span class="stat-label font-label text-xs font-medium tracking-widest uppercase text-onsurfacevariant mt-1 block">RMSE Score</span>
           </div>
-          <div class="stat-card">
-            <span class="stat-card-icon material-symbols-outlined" aria-hidden="true">layers</span>
-            <span class="stat-value">0.9061</span>
-            <span class="stat-label">R&sup2; Score</span>
+          <div class="stat-card text-center p-6">
+            <span class="stat-card-icon text-[2rem] text-accent mb-3 flex items-center justify-center material-symbols-outlined" aria-hidden="true">layers</span>
+            <span class="stat-value font-display text-[2rem] font-bold text-onsurface block">0.9061</span>
+            <span class="stat-label font-label text-xs font-medium tracking-widest uppercase text-onsurfacevariant mt-1 block">R&sup2; Score</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- How It Works -->
-    <section class="how-section">
-      <div class="container">
-        <h2>How It Works</h2>
-        <div class="how-grid">
-          <div class="how-step">
-            <div class="how-step-number">01</div>
-            <span class="how-step-icon material-symbols-outlined" aria-hidden="true">toggle_off</span>
-            <h3>Choose Mode</h3>
-            <p>Select between Quick Mode for fast estimates or Detailed Mode for full analysis, both trained on Ames, Iowa housing data.</p>
+    <section class="how-section bg-white py-10">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="font-display text-2xl md:text-[2rem] font-semibold text-center mb-10 text-onsurface">How It Works</h2>
+        <div class="how-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1000px] mx-auto relative">
+          <div class="absolute top-7 left-[calc(12.5%+24px)] right-[calc(12.5%+24px)] h-0.5 bg-outline hidden lg:block" aria-hidden="true"></div>
+
+          <div class="how-step text-center relative z-10">
+            <div class="how-step-number w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-6 font-label text-base font-semibold border-4 border-white">01</div>
+            <span class="how-step-icon text-2xl text-accent mb-3 block material-symbols-outlined" aria-hidden="true">toggle_off</span>
+            <h3 class="font-display text-lg font-semibold mb-1.5 text-onsurface">Choose Mode</h3>
+            <p class="text-sm leading-relaxed text-onsurfacevariant max-w-[220px] mx-auto">Select between Quick Mode for fast estimates or Detailed Mode for full analysis, both trained on Ames, Iowa housing data.</p>
           </div>
-          <div class="how-step">
-            <div class="how-step-number">02</div>
-            <span class="how-step-icon material-symbols-outlined" aria-hidden="true">edit_note</span>
-            <h3>Input Data</h3>
-            <p>Enter your Ames property details through an intuitive form interface.</p>
+
+          <div class="how-step text-center relative z-10">
+            <div class="how-step-number w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-6 font-label text-base font-semibold border-4 border-white">02</div>
+            <span class="how-step-icon text-2xl text-accent mb-3 block material-symbols-outlined" aria-hidden="true">edit_note</span>
+            <h3 class="font-display text-lg font-semibold mb-1.5 text-onsurface">Input Data</h3>
+            <p class="text-sm leading-relaxed text-onsurfacevariant max-w-[220px] mx-auto">Enter your Ames property details through an intuitive form interface.</p>
           </div>
-          <div class="how-step">
-            <div class="how-step-number">03</div>
-            <span class="how-step-icon material-symbols-outlined" aria-hidden="true">memory</span>
-            <h3>AI Processing</h3>
-            <p>Our ensemble model analyzes 79 property parameters trained on the Ames, IA market.</p>
+
+          <div class="how-step text-center relative z-10">
+            <div class="how-step-number w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-6 font-label text-base font-semibold border-4 border-white">03</div>
+            <span class="how-step-icon text-2xl text-accent mb-3 block material-symbols-outlined" aria-hidden="true">memory</span>
+            <h3 class="font-display text-lg font-semibold mb-1.5 text-onsurface">AI Processing</h3>
+            <p class="text-sm leading-relaxed text-onsurfacevariant max-w-[220px] mx-auto">Our ensemble model analyzes 79 property parameters trained on the Ames, IA market.</p>
           </div>
-          <div class="how-step">
-            <div class="how-step-number">04</div>
-            <span class="how-step-icon material-symbols-outlined" aria-hidden="true">check_circle</span>
-            <h3>Get Result</h3>
-            <p>Receive an accurate price estimate validated on Ames, IA property data.</p>
+
+          <div class="how-step text-center relative z-10">
+            <div class="how-step-number w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-6 font-label text-base font-semibold border-4 border-white">04</div>
+            <span class="how-step-icon text-2xl text-accent mb-3 block material-symbols-outlined" aria-hidden="true">check_circle</span>
+            <h3 class="font-display text-lg font-semibold mb-1.5 text-onsurface">Get Result</h3>
+            <p class="text-sm leading-relaxed text-onsurfacevariant max-w-[220px] mx-auto">Receive an accurate price estimate validated on Ames, IA property data.</p>
           </div>
         </div>
       </div>
     </section>
   </main>
-
 </body>
 </html>
