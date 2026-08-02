@@ -1,0 +1,44 @@
+{% macro result_banner(prediction, confidence, lower, upper, error=None) %}
+{% if error %}
+<div class="bg-red-50 border-error rounded-lg p-6">
+  <div class="flex items-start gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600 mt-0.5">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <div>
+      <h3 class="font-semibold text-red-900">Prediction Error</h3>
+      <p class="text-red-700 mt-1">{{ error }}</p>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="bg-primary rounded-xl p-10 grid grid-cols-1 md:grid-cols-2 gap-8 text-white">
+  <div>
+    <p class="text-sm font-medium text-primary-foreground/70 mb-2">Estimated Sale Price</p>
+    <p class="text-4xl font-bold">${{ "{:,}".format(round(prediction)) }}</p>
+    <p class="text-sm text-primary-foreground/70 mt-2">
+      95% confidence interval: ${{ "{:,}".format(round(lower)) }} – ${{ "{:,}".format(round(upper)) }}
+    </p>
+  </div>
+  <div class="flex flex-col justify-center">
+    <div class="flex items-center gap-3">
+      <span class="font-medium text-primary-foreground/70">Confidence:</span>
+      <span class="{% if confidence >= 80 %}bg-green-500{% elif confidence >= 50 %}bg-yellow-500{% else %}bg-red-500{% endif %} px-3 py-1 rounded-full text-sm font-semibold">
+        {{ confidence|round(1) }}%
+      </span>
+    </div>
+    <div class="mt-4">
+      <div class="flex justify-between text-xs text-primary-foreground/60 mb-1">
+        <span>Low</span>
+        <span>High</span>
+      </div>
+      <div class="w-full bg-primary-foreground/20 rounded-full h-2">
+        <div class="bg-white h-2 rounded-full" style="width: {{ confidence }}%"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endmacro %}

@@ -1,0 +1,27 @@
+<nav class="sticky top-0 z-50 bg-white border-outline h-16 border-b">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center justify-between h-full">
+      <a href="/" class="text-xl font-bold text-primary hover:text-accent transition-colors">
+        House Prices
+      </a>
+      <div class="flex items-center gap-6">
+        <a href="/" 
+           class="nav-link text-sm font-medium transition-colors {% if active_nav == 'home' %}text-primary font-bold{% else %}text-gray-600 hover:text-primary{% endif %}">
+          Home
+        </a>
+        <a href="/simple" 
+           class="nav-link text-sm font-medium transition-colors {% if active_nav == 'simple' %}text-primary font-bold{% else %}text-gray-600 hover:text-primary{% endif %}">
+          Quick Mode
+        </a>
+        <a href="/detail" 
+           class="nav-link text-sm font-medium transition-colors {% if active_nav == 'detail' %}text-primary font-bold{% else %}text-gray-600 hover:text-primary{% endif %}">
+          Detailed Mode
+        </a>
+        <a href="/about" 
+           class="nav-link text-sm font-medium transition-colors {% if active_nav == 'about' %}text-primary font-bold{% else %}text-gray-600 hover:text-primary{% endif %}">
+          About
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
