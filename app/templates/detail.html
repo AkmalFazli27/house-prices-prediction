@@ -33,10 +33,10 @@
     <aside class="detail-sidebar lg:sticky lg:top-[104px] lg:max-h-[calc(100vh-144px)] lg:overflow-y-auto" id="sidebar" role="navigation" aria-label="Feature categories">
       <nav class="detail-sidebar-nav bg-white border border-outline rounded-lg p-3">
         {% for group in groups %}
-        <a href="#section-{{ group.id }}" class="detail-sidebar-item flex items-center gap-2.5 px-3 py-2.5 rounded-md text-[0.8125rem] font-medium text-onsurfacevariant no-underline transition-colors duration-200 cursor-pointer border-none w-full text-left font-body hover:bg-slate-50" data-section="{{ group.id }}">
+        <a href="#section-{{ group.id }}" class="detail-sidebar-item flex items-center gap-2.5 px-3 py-2.5 rounded-md text-[0.8125rem] font-medium no-underline transition-colors duration-200 cursor-pointer border-none w-full text-left font-body" data-section="{{ group.id }}">
           <span class="material-symbols-outlined text-lg" aria-hidden="true">{{ group.icon }}</span>
           {{ group.label }}
-          <span class="badge ml-auto font-label text-[0.65rem] bg-slate-50 px-1.5 py-0.5 rounded text-onsurfacevariant">{{ group.fields|length }}</span>
+          <span class="badge ml-auto font-label text-[0.65rem] px-1.5 py-0.5 rounded">{{ group.fields|length }}</span>
         </a>
         {% endfor %}
       </nav>

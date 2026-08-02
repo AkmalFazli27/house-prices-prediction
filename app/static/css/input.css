@@ -23,9 +23,11 @@
   }
 }
 
-@layer components {
-  .detail-sidebar-item.active { background: #0D9488; color: #FFFFFF; }
-  .detail-sidebar-item.active:hover,
-  .detail-sidebar-item.active:focus-visible { background: #0D9488; color: #FFFFFF; }
-  .detail-sidebar-item.active .badge { background: rgba(255,255,255,0.2); color: #FFFFFF; }
-}
+/* Detail sidebar — unlayered so rules beat Tailwind utilities (mirrors vanilla detail.css) */
+.detail-sidebar-item { color: #64748B; }
+.detail-sidebar-item:hover { background: #F8FAFC; }
+.detail-sidebar-item.active { background: #0D9488; color: #FFFFFF; }
+.detail-sidebar-item.active:hover,
+.detail-sidebar-item.active:focus-visible { background: #0D9488; color: #FFFFFF; }
+.detail-sidebar-item .badge { background: #F8FAFC; color: #64748B; }
+.detail-sidebar-item.active .badge { background: rgba(255,255,255,0.2); color: #FFFFFF; }
