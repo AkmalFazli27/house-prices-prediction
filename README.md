@@ -57,25 +57,25 @@ house-prices-prediction/
 │   └── static/
 │       ├── css/
 │       │   ├── input.css       # Tailwind v4 source (theme tokens)
-│       │   └── tailwind.css    # Generated build output (gitignored)
+│       │   └── tailwind.css    # Generated build output (committed for Render)
 │       └── js/
 │           ├── navbar.js       # Mobile hamburger menu
 │           ├── detail.js       # Scroll-spy + back-to-top
 │           ├── simple.js       # Quick Mode form
 │           ├── form_loading.js # Predict button loading state
 │           └── home.js         # Homepage stats animation
-
+│
 ├── models/
 │   └── preprocessing_pipeline.pkl  # Preprocessing pipeline (17KB)
 │   # stacking_regressor.pkl downloaded at runtime from GitHub Releases
-
+│
 ├── tests/
 │   ├── test_model_download.py    # Unit tests for model download
 │   ├── test_schemas.py           # SimpleHouseInput validation tests
 │   ├── test_templates.py         # Template regression tests
 │   ├── detail-scroll-spy.test.js # Scroll-spy behavior (node)
 │   └── form-loading.test.js      # Predict loading state (node)
-
+│
 ├── requirements.txt            # Python dependencies
 ├── package.json                # Tailwind v4 build config
 ├── package-lock.json
@@ -107,6 +107,10 @@ npm install
 
 # Build the CSS bundle
 npm run build
+
+# NOTE: commit the regenerated app/static/css/tailwind.css along with your
+# template/input.css changes — Render has no Node.js, so it deploys the
+# pre-built CSS directly.
 
 # Run the app
 uvicorn app.main:app --reload --port 8000
