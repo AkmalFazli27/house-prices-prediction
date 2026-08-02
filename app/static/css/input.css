@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@source "../templates";
+
+@theme {
+  --color-primary: #2563eb;
+  --color-accent: #7c3aed;
+  --color-onsurface: #111827;
+  --color-onsurface-variant: #6b7280;
+  --color-outline: #d1d5db;
+  --color-outline-variant: #e5e7eb;
+  --color-error: #dc2626;
+
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-label: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply font-body text-onsurface bg-white antialiased;
+  }
+}
