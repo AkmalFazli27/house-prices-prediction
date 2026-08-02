@@ -1,29 +1,39 @@
 (function () {
   const sections = document.querySelectorAll(".detail-section");
   const navItems = document.querySelectorAll(".detail-sidebar-item");
+  let suppressUntil = 0;
 
   function updateActiveSection() {
-    const offset = 150;
+    if (Date.now() < suppressUntil) return;
+
+    const mid = window.innerHeight / 2;
     let current = "";
 
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
-      if (rect.top <= offset) {
+      if (rect.top <= mid && rect.bottom >= mid) {
         current = section.id.replace("section-", "");
       }
     });
 
     if (!current && sections.length > 0) {
-      const last = sections[sections.length - 1].getBoundingClientRect();
-      current = last.bottom <= window.innerHeight
-        ? sections[sections.length - 1].id.replace("section-", "")
-        : sections[0].id.replace("section-", "");
+      const first = sections[0].getBoundingClientRect();
+      current = first.top > mid
+        ? sections[0].id.replace("section-", "")
+        : sections[sections.length - 1].id.replace("section-", "");
     }
 
     navItems.forEach((item) => {
       item.classList.toggle("active", item.dataset.section === current);
     });
   }
+
+  navItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      suppressUntil = Date.now() + 300;
+      navItems.forEach((n) => n.classList.toggle("active", n === this));
+    });
+  });
 
   window.addEventListener("scroll", updateActiveSection, { passive: true });
   window.addEventListener("resize", updateActiveSection, { passive: true });
