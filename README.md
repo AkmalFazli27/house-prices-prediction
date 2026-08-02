@@ -49,16 +49,36 @@ house-prices-prediction/
 │   ├── schemas.py              # Pydantic models for API
 │   ├── feature_data.py         # Form field definitions
 │   ├── templates/              # Jinja2 HTML templates
-│   └── static/                 # CSS, JS, images
-│
+│   │   ├── components/         # Shared partials (navbar, btn_predict, result_banner)
+│   │   ├── index.html          # Homepage
+│   │   ├── simple.html         # Quick Mode
+│   │   ├── detail.html         # Detailed Mode
+│   │   └── about.html          # About page
+│   └── static/
+│       ├── css/
+│       │   ├── input.css       # Tailwind v4 source (theme tokens)
+│       │   └── tailwind.css    # Generated build output (gitignored)
+│       └── js/
+│           ├── navbar.js       # Mobile hamburger menu
+│           ├── detail.js       # Scroll-spy + back-to-top
+│           ├── simple.js       # Quick Mode form
+│           ├── form_loading.js # Predict button loading state
+│           └── home.js         # Homepage stats animation
+
 ├── models/
 │   └── preprocessing_pipeline.pkl  # Preprocessing pipeline (17KB)
 │   # stacking_regressor.pkl downloaded at runtime from GitHub Releases
-│
+
 ├── tests/
-│   └── test_model_download.py  # Unit tests for model download
-│
+│   ├── test_model_download.py    # Unit tests for model download
+│   ├── test_schemas.py           # SimpleHouseInput validation tests
+│   ├── test_templates.py         # Template regression tests
+│   ├── detail-scroll-spy.test.js # Scroll-spy behavior (node)
+│   └── form-loading.test.js      # Predict loading state (node)
+
 ├── requirements.txt            # Python dependencies
+├── package.json                # Tailwind v4 build config
+├── package-lock.json
 ├── Procfile                    # Render start command
 └── render.yaml                 # Render service config
 ```
@@ -81,6 +101,12 @@ venv\Scripts\activate          # Windows
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Install Tailwind CSS dev dependencies
+npm install
+
+# Build the CSS bundle
+npm run build
 
 # Run the app
 uvicorn app.main:app --reload --port 8000
@@ -130,6 +156,9 @@ The model uses a **Stacking Regressor** with 5 base estimators:
 - **Detailed Mode** — Full 79-field form for accurate predictions
 - **Confidence Score** — Shows prediction reliability (0-100%)
 - **Estimated Price Range** — Predicted price with variability estimate based on base estimator spread
+- **Mobile Navigation** — Hamburger menu on small screens
+- **Back-to-Top** — Quick return to category navigation in Detailed Mode
+- **Loading State** — Predict button shows spinner + disables while processing
 
 ---
 
@@ -137,7 +166,7 @@ The model uses a **Stacking Regressor** with 5 base estimators:
 
 - **Backend:** Python, FastAPI, Uvicorn
 - **ML:** scikit-learn, XGBoost, LightGBM, CatBoost
-- **Frontend:** Jinja2, HTML, CSS, JavaScript
+- **Frontend:** Jinja2, Tailwind CSS v4, HTML, JavaScript
 - **Deployment:** Render, GitHub Releases (model storage)
 
 ---
