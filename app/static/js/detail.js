@@ -17,10 +17,25 @@
     });
 
     if (!current && sections.length > 0) {
-      const first = sections[0].getBoundingClientRect();
-      current = first.top > mid
-        ? sections[0].id.replace("section-", "")
-        : sections[sections.length - 1].id.replace("section-", "");
+      let below = null;
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top > mid && (!below || rect.top < below.rect.top)) {
+          below = { id: section.id.replace("section-", ""), rect };
+        }
+      });
+      if (below) {
+        current = below.id;
+      } else {
+        let last = sections[0];
+        sections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < window.innerHeight) {
+            last = section;
+          }
+        });
+        current = last.id.replace("section-", "");
+      }
     }
 
     navItems.forEach((item) => {
