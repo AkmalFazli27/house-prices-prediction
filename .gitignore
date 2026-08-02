@@ -12,5 +12,4 @@ stitch_house_price_predictor/
 .superpowers
 models/stacking_regressor.pkl
 node_modules/
-app/static/css/tailwind.css
 .pytest_cache/
