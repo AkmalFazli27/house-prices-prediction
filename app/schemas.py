@@ -126,6 +126,27 @@ class SimpleHouseInput(BaseModel):
     bsmtqual: Optional[str] = None
     lotfrontage: Optional[float] = None
 
+    @field_validator("overallqual")
+    @classmethod
+    def validate_quality(cls, v):
+        if v is not None and (v < 1 or v > 10):
+            raise ValueError("OverallQual should be between 1-10")
+        return v
+
+    @field_validator("lot_area")
+    @classmethod
+    def validate_lot_area(cls, v):
+        if v is not None and v <= 0:
+            raise ValueError("LotArea should be greater than 0")
+        return v
+
+    @field_validator("bedroomabvgr")
+    @classmethod
+    def validate_bedrooms(cls, v):
+        if v is not None and v < 0:
+            raise ValueError("The number of bedrooms cannot be negative.")
+        return v
+
 class PredictionOutput(BaseModel):
     prediction: float
     confidence: int
