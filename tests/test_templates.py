@@ -94,7 +94,7 @@ class TemplateRegressionTests(unittest.TestCase):
         self.assertIn("h-4 w-4", html)
         self.assertIn('width="16"', html)
         self.assertIn('height="16"', html)
-        self.assertIn("disabled:opacity-60", html)
+        self.assertIn("disabled:bg-accent", html)
         self.assertIn("disabled:cursor-not-allowed", html)
 
 
