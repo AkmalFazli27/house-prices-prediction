@@ -1,27 +1,23 @@
-<nav class="sticky top-0 z-50 bg-white border-outline h-16 border-b">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="flex items-center justify-between h-full">
-      <a href="/" class="text-xl font-bold text-primary hover:text-accent transition-colors">
-        House Prices
+<nav class="sticky top-0 z-50 h-16 border-b border-outline bg-white">
+  <div class="mx-auto h-full max-w-7xl px-4 md:px-12">
+    <div class="flex h-full items-center justify-between">
+      <a href="/" class="font-display text-2xl font-bold text-primary no-underline">
+        Omah.AI
       </a>
-      <div class="flex items-center gap-6">
-        <a href="/" 
-           class="nav-link text-sm font-medium transition-colors {% if active_nav == 'home' %}text-primary font-bold{% else %}text-gray-600 hover:text-primary{% endif %}">
-          Home
-        </a>
-        <a href="/simple" 
-           class="nav-link text-sm font-medium transition-colors {% if active_nav == 'simple' %}text-primary font-bold{% else %}text-gray-600 hover:text-primary{% endif %}">
-          Quick Mode
-        </a>
-        <a href="/detail" 
-           class="nav-link text-sm font-medium transition-colors {% if active_nav == 'detail' %}text-primary font-bold{% else %}text-gray-600 hover:text-primary{% endif %}">
-          Detailed Mode
-        </a>
-        <a href="/about" 
-           class="nav-link text-sm font-medium transition-colors {% if active_nav == 'about' %}text-primary font-bold{% else %}text-gray-600 hover:text-primary{% endif %}">
-          About
-        </a>
-      </div>
+      <ul class="flex items-center gap-6">
+        <li>
+          <a href="/" class="font-label text-xs font-medium uppercase tracking-wider pb-1 border-b-2 transition-colors duration-200 {% if active_nav == 'home' %}border-accent text-accent{% else %}border-transparent text-onsurfacevariant hover:text-accent{% endif %}" {% if active_nav == 'home' %}aria-current="page"{% endif %}>Home</a>
+        </li>
+        <li>
+          <a href="/simple" class="font-label text-xs font-medium uppercase tracking-wider pb-1 border-b-2 transition-colors duration-200 {% if active_nav == 'simple' %}border-accent text-accent{% else %}border-transparent text-onsurfacevariant hover:text-accent{% endif %}" {% if active_nav == 'simple' %}aria-current="page"{% endif %}>Quick Mode</a>
+        </li>
+        <li>
+          <a href="/detail" class="font-label text-xs font-medium uppercase tracking-wider pb-1 border-b-2 transition-colors duration-200 {% if active_nav == 'detail' %}border-accent text-accent{% else %}border-transparent text-onsurfacevariant hover:text-accent{% endif %}" {% if active_nav == 'detail' %}aria-current="page"{% endif %}>Detailed Mode</a>
+        </li>
+        <li>
+          <a href="/about" class="font-label text-xs font-medium uppercase tracking-wider pb-1 border-b-2 transition-colors duration-200 {% if active_nav == 'about' %}border-accent text-accent{% else %}border-transparent text-onsurfacevariant hover:text-accent{% endif %}" {% if active_nav == 'about' %}aria-current="page"{% endif %}>About</a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
