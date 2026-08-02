@@ -4,6 +4,8 @@ An end-to-end data science project that predicts house prices using machine lear
 
 **🔗 Live App:** [https://ames-house-price-prediction-0f33.onrender.com/](https://ames-house-price-prediction-0f33.onrender.com/)
 
+![Omah.AI Homepage](assets/homepage.png)
+
 ---
 
 ## 📊 Overview
@@ -40,6 +42,9 @@ house-prices-prediction/
 │   ├── data_cleaning.ipynb         # Step 1: Data cleaning
 │   ├── feature_engineering.ipynb   # Step 2: Feature engineering
 │   └── modeling.ipynb              # Step 3: Model training & evaluation
+│
+├── assets/
+│   └── homepage.png            # Screenshot of the web app homepage
 │
 ├── app/                        # FastAPI web application
 │   ├── main.py                 # App entrypoint & routes
