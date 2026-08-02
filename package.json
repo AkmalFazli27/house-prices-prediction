@@ -1,0 +1,13 @@
+{
+  "name": "house-prices-prediction",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx @tailwindcss/cli -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch",
+    "build": "npx @tailwindcss/cli -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/cli": "^4.0.0"
+  }
+}

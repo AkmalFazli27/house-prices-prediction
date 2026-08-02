@@ -8,63 +8,67 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=block" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/base.css') }}?v=2">
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/simple.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/tailwind.css') }}">
+  <script src="{{ url_for('static', path='/js/navbar.js') }}?v=1" defer></script>
   <script src="{{ url_for('static', path='/js/simple.js') }}" defer></script>
+  <script src="{{ url_for('static', path='/js/form_loading.js') }}?v=1" defer></script>
+  <style>
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--color-accent); border: 2px solid white;
+      cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--color-accent); border: 2px solid white;
+      cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+  </style>
 </head>
 <body>
+  {% set active_nav = 'simple' %}
+  {% include 'components/navbar.html' %}
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container">
-      <a href="/" class="navbar-logo">Omah.AI</a>
-      <ul class="navbar-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/simple" class="active" aria-current="page">Quick Mode</a></li>
-        <li><a href="/detail">Detailed Mode</a></li>
-        <li><a href="/about">About</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <main class="simple-layout">
-    <!-- Sidebar -->
-    <aside class="simple-sidebar">
-      <div class="sidebar-card">
-        <div class="sidebar-icon">
-          <span class="material-symbols-outlined" aria-hidden="true">bolt</span>
+  <main class="grid grid-cols-1 lg:grid-cols-[4fr_8fr] gap-6 items-start max-w-7xl mx-auto px-6 py-10">
+    <aside class="simple-sidebar lg:sticky lg:top-[104px]">
+      <div class="sidebar-card bg-slate-100 border border-outline rounded-lg p-6">
+        <div class="sidebar-icon w-12 h-12 rounded-lg bg-accent text-white flex items-center justify-center mb-3">
+          <span class="material-symbols-outlined text-2xl" aria-hidden="true">bolt</span>
         </div>
-        <p class="sidebar-badge">Ames, Iowa</p>
-        <h2>Quick Mode</h2>
-        <p>Quickly estimate your Ames property value with 10 key variables. Our AI model is trained on the Ames Housing dataset for accurate local predictions.</p>
+        <p class="sidebar-badge inline-block font-label text-xs font-medium uppercase tracking-widest text-accent bg-accent/10 border border-accent/15 px-2.5 py-0.5 rounded-full mb-3">Ames, Iowa</p>
+        <h2 class="font-display text-2xl font-semibold mb-3 text-onsurface">Quick Mode</h2>
+        <p class="text-sm leading-relaxed text-onsurfacevariant">Quickly estimate your Ames property value with 10 key variables. Our AI model is trained on the Ames Housing dataset for accurate local predictions.</p>
       </div>
     </aside>
 
-    <!-- Form -->
     <section>
-      <div class="form-card">
-        <h1>Input Data Property</h1>
+      <div class="form-card bg-white border border-outline rounded-lg p-10">
+        <h1 class="font-display text-2xl font-semibold mb-6 text-onsurface">Input Data Property</h1>
 
         <form action="/simple" method="POST">
 
-          <!-- SIZE & LAYOUT -->
-          <div class="form-section">
-            <div class="form-section-header">
-              <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
-              <span class="form-section-label">Size &amp; Layout</span>
+          <div class="form-section mb-6 pb-6 border-b border-outline last:border-b-0 last:pb-0">
+            <div class="form-section-header flex items-center gap-2.5 mb-6 pb-3 border-b border-outline">
+              <span class="material-symbols-outlined text-[22px] text-accent" aria-hidden="true">dashboard</span>
+              <span class="form-section-label font-display text-lg font-semibold text-onsurface">Size &amp; Layout</span>
             </div>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="total_area">Total Area (sq ft)</label>
-                <input type="number" id="total_area" name="total_area" class="form-input" placeholder="e.g. 2000" required>
+            <div class="form-grid grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="form-group flex flex-col">
+                <label for="total_area" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Total Area (sq ft)</label>
+                <input type="number" id="total_area" name="total_area" placeholder="e.g. 2000" required
+                       class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] placeholder:text-outlinevariant">
               </div>
-              <div class="form-group">
-                <label for="lot_area">Lot Area (sq ft)</label>
-                <input type="number" id="lot_area" name="lot_area" class="form-input" placeholder="e.g. 5000" required>
+              <div class="form-group flex flex-col">
+                <label for="lot_area" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Lot Area (sq ft)</label>
+                <input type="number" id="lot_area" name="lot_area" placeholder="e.g. 5000" required
+                       class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] placeholder:text-outlinevariant">
               </div>
-              <div class="form-group">
-                <label for="totrmsabvgrd">Total Rooms</label>
-                <select id="totrmsabvgrd" name="totrmsabvgrd" class="form-input" required>
+              <div class="form-group flex flex-col">
+                <label for="totrmsabvgrd" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Total Rooms</label>
+                <select id="totrmsabvgrd" name="totrmsabvgrd" required
+                        class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] appearance-none cursor-pointer pr-9 bg-no-repeat"
+                        style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748B%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E');background-position:right 12px center;">
                   <option value="" disabled selected>Select...</option>
                   <option value="3">3</option><option value="4">4</option><option value="5">5</option>
                   <option value="6">6</option><option value="7">7</option><option value="8">8</option>
@@ -73,9 +77,11 @@
                   <option value="15">15+</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="bedroomabvgr">Bedrooms</label>
-                <select id="bedroomabvgr" name="bedroomabvgr" class="form-input" required>
+              <div class="form-group flex flex-col">
+                <label for="bedroomabvgr" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Bedrooms</label>
+                <select id="bedroomabvgr" name="bedroomabvgr" required
+                        class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] appearance-none cursor-pointer pr-9 bg-no-repeat"
+                        style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748B%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E');background-position:right 12px center;">
                   <option value="" disabled selected>Select...</option>
                   <option value="1">1</option><option value="2">2</option><option value="3">3</option>
                   <option value="4">4</option><option value="5">5</option><option value="6">6</option>
@@ -85,35 +91,40 @@
             </div>
           </div>
 
-          <!-- QUALITY & CONDITION -->
-          <div class="form-section">
-            <div class="form-section-header">
-              <span class="material-symbols-outlined" aria-hidden="true">verified</span>
-              <span class="form-section-label">Quality &amp; Condition</span>
+          <div class="form-section mb-6 pb-6 border-b border-outline last:border-b-0 last:pb-0">
+            <div class="form-section-header flex items-center gap-2.5 mb-6 pb-3 border-b border-outline">
+              <span class="material-symbols-outlined text-[22px] text-accent" aria-hidden="true">verified</span>
+              <span class="form-section-label font-display text-lg font-semibold text-onsurface">Quality &amp; Condition</span>
             </div>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="overallqual">Overall Quality</label>
-                <div class="range-wrapper">
-                  <input type="range" id="overallqual" name="overallqual" class="form-range" min="0" max="10" value="5">
-                  <span class="range-value" id="overallqual-value">5</span>
+            <div class="form-grid grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="form-group flex flex-col">
+                <label for="overallqual" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Overall Quality</label>
+                <div class="range-wrapper flex items-center gap-3">
+                  <input type="range" id="overallqual" name="overallqual" min="1" max="10" value="5" aria-label="Overall Quality"
+                         class="form-range flex-1 h-1.5 appearance-none rounded cursor-pointer outline-none">
+                  <span class="range-value font-display text-xl font-semibold text-accent min-w-6 text-center" id="overallqual-value">5</span>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="house_age">House Age (years)</label>
-                <input type="number" id="house_age" name="house_age" class="form-input" placeholder="e.g. 15" required>
+              <div class="form-group flex flex-col">
+                <label for="house_age" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">House Age (years)</label>
+                <input type="number" id="house_age" name="house_age" placeholder="e.g. 15" required
+                       class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] placeholder:text-outlinevariant">
               </div>
-              <div class="form-group">
-                <label for="garagecars">Garage Capacity</label>
-                <select id="garagecars" name="garagecars" class="form-input" required>
+              <div class="form-group flex flex-col">
+                <label for="garagecars" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Garage Capacity</label>
+                <select id="garagecars" name="garagecars" required
+                        class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] appearance-none cursor-pointer pr-9 bg-no-repeat"
+                        style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748B%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E');background-position:right 12px center;">
                   <option value="" disabled selected>Select...</option>
                   <option value="0">0</option><option value="1">1</option><option value="2">2</option>
                   <option value="3">3</option><option value="4">4+</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="fireplaces">Fireplaces</label>
-                <select id="fireplaces" name="fireplaces" class="form-input" required>
+              <div class="form-group flex flex-col">
+                <label for="fireplaces" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Fireplaces</label>
+                <select id="fireplaces" name="fireplaces" required
+                        class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] appearance-none cursor-pointer pr-9 bg-no-repeat"
+                        style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748B%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E');background-position:right 12px center;">
                   <option value="" disabled selected>Select...</option>
                   <option value="0">0</option><option value="1">1</option><option value="2">2</option>
                   <option value="3">3</option><option value="4">4+</option>
@@ -122,16 +133,17 @@
             </div>
           </div>
 
-          <!-- LOCATION -->
-          <div class="form-section">
-            <div class="form-section-header">
-              <span class="material-symbols-outlined" aria-hidden="true">pin_drop</span>
-              <span class="form-section-label">Location</span>
+          <div class="form-section mb-6 pb-6 border-b border-outline last:border-b-0 last:pb-0">
+            <div class="form-section-header flex items-center gap-2.5 mb-6 pb-3 border-b border-outline">
+              <span class="material-symbols-outlined text-[22px] text-accent" aria-hidden="true">pin_drop</span>
+              <span class="form-section-label font-display text-lg font-semibold text-onsurface">Location</span>
             </div>
-            <div class="form-grid">
-              <div class="form-group form-group-full">
-                <label for="neighborhood">Neighborhood</label>
-                <select id="neighborhood" name="neighborhood" class="form-input" required>
+            <div class="form-grid grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="form-group flex flex-col md:col-span-2">
+                <label for="neighborhood" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Neighborhood</label>
+                <select id="neighborhood" name="neighborhood" required
+                        class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] appearance-none cursor-pointer pr-9 bg-no-repeat"
+                        style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748B%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E');background-position:right 12px center;">
                   <option value="" disabled selected>Select neighborhood...</option>
                   <option value="Blmngtn">Bloomington Heights</option> <option value="NAmes">North Ames</option>
                   <option value="Blueste">Bluestem</option> <option value="BrDale">Briardale</option>
@@ -150,92 +162,75 @@
             </div>
           </div>
 
-          <!-- OPTIONAL -->
-          <div class="form-section">
-            <div class="form-section-header">
-              <span class="material-symbols-outlined" aria-hidden="true">tune</span>
-              <span class="form-section-label">Optional</span>
-              <span class="optional-badge">For better prediction</span>
+          <div class="form-section mb-6 pb-6 border-b border-outline last:border-b-0 last:pb-0">
+            <div class="form-section-header flex items-center gap-2.5 mb-6 pb-3 border-b border-outline">
+              <span class="material-symbols-outlined text-[22px] text-accent" aria-hidden="true">tune</span>
+              <span class="form-section-label font-display text-lg font-semibold text-onsurface">Optional</span>
+              <span class="optional-badge font-label text-xs text-onsurfacevariant bg-slate-50 px-2 py-0.5 rounded capitalize ml-1.5 tracking-normal">For better prediction</span>
             </div>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="kitchenqual">Kitchen Quality</label>
-                <select id="kitchenqual" name="kitchenqual" class="form-input">
+            <div class="form-grid grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="form-group flex flex-col">
+                <label for="kitchenqual" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Kitchen Quality</label>
+                <select id="kitchenqual" name="kitchenqual"
+                        class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] appearance-none cursor-pointer pr-9 bg-no-repeat"
+                        style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748B%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E');background-position:right 12px center;">
                   <option value="" selected>Choose...</option>
                   <option value="Ex">Excellent</option><option value="Gd">Good</option>
                   <option value="TA">Typical/Average</option><option value="Fa">Fair</option>
                   <option value="Po">Poor</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="exterqual">Exterior Quality</label>
-                <select id="exterqual" name="exterqual" class="form-input">
+              <div class="form-group flex flex-col">
+                <label for="exterqual" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Exterior Quality</label>
+                <select id="exterqual" name="exterqual"
+                        class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] appearance-none cursor-pointer pr-9 bg-no-repeat"
+                        style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748B%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E');background-position:right 12px center;">
                   <option value="" selected>Choose...</option>
                   <option value="Ex">Excellent</option><option value="Gd">Good</option>
                   <option value="TA">Typical/Average</option><option value="Fa">Fair</option>
                   <option value="Po">Poor</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="centralair">Central Air</label>
-                <select id="centralair" name="centralair" class="form-input">
+              <div class="form-group flex flex-col">
+                <label for="centralair" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Central Air</label>
+                <select id="centralair" name="centralair"
+                        class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] appearance-none cursor-pointer pr-9 bg-no-repeat"
+                        style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748B%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E');background-position:right 12px center;">
                   <option value="" selected>Choose...</option>
                   <option value="Y">Yes</option><option value="N">No</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="bsmtqual">Basement Quality</label>
-                <select id="bsmtqual" name="bsmtqual" class="form-input">
+              <div class="form-group flex flex-col">
+                <label for="bsmtqual" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Basement Quality</label>
+                <select id="bsmtqual" name="bsmtqual"
+                        class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] appearance-none cursor-pointer pr-9 bg-no-repeat"
+                        style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748B%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E');background-position:right 12px center;">
                   <option value="" selected>Choose...</option>
                   <option value="Ex">Excellent (100+ inches)</option><option value="Gd">Good (90-99 inches)</option>
                   <option value="TA">Typical (80-89 inches)</option><option value="Fa">Fair (70-79 inches)</option>
                   <option value="Po">Poor (&lt;70 inches)</option><option value="NA">No Basement</option>
                 </select>
               </div>
-              <div class="form-group form-group-full">
-                <label for="lotfrontage">Lot Frontage (ft)</label>
-                <input type="number" id="lotfrontage" name="lotfrontage" class="form-input" placeholder="e.g. 60">
+              <div class="form-group flex flex-col md:col-span-2">
+                <label for="lotfrontage" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-1">Lot Frontage (ft)</label>
+                <input type="number" id="lotfrontage" name="lotfrontage" placeholder="e.g. 60"
+                       class="h-11 px-3 border border-outline rounded-md font-body text-sm text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] placeholder:text-outlinevariant">
               </div>
             </div>
           </div>
 
-          <!-- SUBMIT -->
-          <div class="form-submit">
-            <button type="submit" class="btn-predict">
-              Predict Price
-              <span class="material-symbols-outlined" aria-hidden="true">trending_up</span>
-            </button>
-            <p class="form-disclaimer">*Prediction uses our latest ensemble model trained on market data.</p>
+          <div class="form-submit mt-6 text-center">
+            {% from 'components/btn_predict.html' import btn_predict %}
+            {{ btn_predict() }}
+            <p class="form-disclaimer text-xs italic text-onsurfacevariant mt-3">*Prediction uses our latest ensemble model trained on market data.</p>
           </div>
 
         </form>
-
       </div>
 
-      {% if prediction %}
-      <div class="prediction-card" id="prediction-result">
-        <div>
-          <div class="prediction-label">Estimated Price</div>
-          <div class="prediction-value">${{ "{:,.0f}".format(prediction) }}</div>
-        </div>
-        <div class="prediction-right">
-          <span class="confidence-badge confidence-{{ 'high' if confidence >= 80 else 'medium' if confidence >= 50 else 'low' }}">
-            <span class="material-symbols-outlined" style="font-size:16px;">verified</span>
-            {{ confidence }}% Confidence
-          </span>
-          <span class="prediction-range">
-            Range: <strong>${{ "{:,.0f}".format(lower) }}</strong> <span class="prediction-sep">–</span> <strong>${{ "{:,.0f}".format(upper) }}</strong>
-          </span>
-        </div>
-      </div>
-      {% elif error %}
-      <div class="error-banner">
-        <span class="material-symbols-outlined" aria-hidden="true">error</span>
-        <span>{{ error }}</span>
-      </div>
-      {% endif %}
+      {% from 'components/result_banner.html' import result_banner %}
+      {{ result_banner(prediction, confidence, lower, upper, error) }}
     </section>
   </main>
-
 </body>
 </html>

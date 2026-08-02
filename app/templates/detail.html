@@ -8,64 +8,67 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=block" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/base.css') }}?v=2">
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/detail.css') }}">
-  <script src="{{ url_for('static', path='/js/detail.js') }}" defer></script>
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/tailwind.css') }}">
+  <script src="{{ url_for('static', path='/js/navbar.js') }}?v=1" defer></script>
+  <script src="{{ url_for('static', path='/js/detail.js') }}?v=2" defer></script>
+  <script src="{{ url_for('static', path='/js/form_loading.js') }}?v=1" defer></script>
+  <style>
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--color-accent); border: 2px solid white;
+      cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--color-accent); border: 2px solid white;
+      cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+  </style>
 </head>
 <body>
+  {% set active_nav = 'detail' %}
+  {% include 'components/navbar.html' %}
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container">
-      <a href="/" class="navbar-logo">Omah.AI</a>
-      <ul class="navbar-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/simple">Quick Mode</a></li>
-        <li><a href="/detail" class="active" aria-current="page">Detailed Mode</a></li>
-        <li><a href="/about">About</a></li>
-      </ul>
-    </div>
-  </nav>
+  <main class="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 items-start max-w-7xl mx-auto px-6 py-10">
 
-  <main class="detail-layout">
-
-    <!-- Sidebar -->
-    <aside class="detail-sidebar" id="sidebar" role="navigation" aria-label="Feature categories">
-      <nav class="detail-sidebar-nav">
+    <aside class="detail-sidebar lg:sticky lg:top-[104px] lg:max-h-[calc(100vh-144px)] lg:overflow-y-auto" id="sidebar" role="navigation" aria-label="Feature categories">
+      <nav class="detail-sidebar-nav bg-white border border-outline rounded-lg p-3">
         {% for group in groups %}
-        <a href="#section-{{ group.id }}" class="detail-sidebar-item" data-section="{{ group.id }}">
-          <span class="material-symbols-outlined" aria-hidden="true">{{ group.icon }}</span>
+        <a href="#section-{{ group.id }}" class="detail-sidebar-item flex items-center gap-2.5 px-3 py-2.5 rounded-md text-[0.8125rem] font-medium no-underline transition-colors duration-200 cursor-pointer border-none w-full text-left font-body" data-section="{{ group.id }}">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">{{ group.icon }}</span>
           {{ group.label }}
-          <span class="badge">{{ group.fields|length }}</span>
+          <span class="badge ml-auto font-label text-[0.65rem] px-1.5 py-0.5 rounded">{{ group.fields|length }}</span>
         </a>
         {% endfor %}
       </nav>
     </aside>
 
-    <!-- Form -->
-    <section class="detail-content">
-      <div class="detail-header">
-        <h1>Detailed Property Analysis</h1>
-        <p>Complete all 79 parameters for the most accurate Ames, IA property valuation.</p>
+    <section class="detail-content min-w-0">
+      <div class="detail-header mb-6">
+        <h1 class="font-display text-2xl font-semibold mb-1 text-onsurface">Detailed Property Analysis</h1>
+        <p class="text-sm text-onsurfacevariant">Complete all 79 parameters for the most accurate Ames, IA property valuation.</p>
       </div>
 
       <form action="/detail" method="POST">
 
         {% for group in groups %}
-        <div class="detail-section" id="section-{{ group.id }}">
-          <div class="detail-section-header">
-            <span class="material-symbols-outlined" aria-hidden="true">{{ group.icon }}</span>
-            <h2>{{ group.label }}</h2>
+        <div class="detail-section bg-white border border-outline rounded-lg p-6 mb-6 scroll-mt-[88px]" id="section-{{ group.id }}">
+          <div class="detail-section-header flex items-center gap-2.5 mb-6 pb-3 border-b border-outline">
+            <span class="material-symbols-outlined text-[22px] text-accent" aria-hidden="true">{{ group.icon }}</span>
+            <h2 class="font-display text-lg font-semibold text-onsurface">{{ group.label }}</h2>
           </div>
 
-          <div class="detail-field-grid">
+          <div class="detail-field-grid grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3">
             {% for field in group.fields %}
-            <div class="detail-field">
-              <label for="{{ field.name }}">{{ field.label }}</label>
+            <div class="detail-field flex flex-col">
+              <label for="{{ field.name }}" class="text-xs font-medium uppercase tracking-wider text-onsurfacevariant mb-[3px]">{{ field.label }}</label>
 
               {% if field.type == "select" %}
               {% set current_val = form_data.get(field.name, '') %}
-              <select id="{{ field.name }}" name="{{ field.name }}">
+              <select id="{{ field.name }}" name="{{ field.name }}"
+                      class="h-10 px-2.5 border border-outline rounded-md font-body text-[0.8125rem] text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)] appearance-none cursor-pointer pr-8 bg-no-repeat"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748B%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E');background-position:right 10px center;">
                 <option value="">Select...</option>
                 {% for val, display in field.options %}
                 <option value="{{ val }}" {% if val == current_val %}selected{% endif %}>{{ display }}</option>
@@ -74,11 +77,12 @@
 
               {% elif field.type == "range" %}
               {% set current_val = form_data.get(field.name, field.value) %}
-              <div class="detail-range-wrapper">
+              <div class="detail-range-wrapper flex items-center gap-2">
                 <input type="range" id="{{ field.name }}" name="{{ field.name }}"
                        min="{{ field.min }}" max="{{ field.max }}" value="{{ current_val }}"
-                       aria-label="{{ field.label }}">
-                <span class="detail-range-value" id="{{ field.name }}-value">{{ current_val }}</span>
+                       aria-label="{{ field.label }}"
+                       class="flex-1 h-[5px] appearance-none bg-outline rounded cursor-pointer outline-none">
+                <span class="detail-range-value font-display text-base font-semibold text-accent min-w-5 text-center" id="{{ field.name }}-value">{{ current_val }}</span>
               </div>
 
               {% else %}
@@ -86,7 +90,8 @@
                      placeholder="{{ field.placeholder | default('') }}"
                      value="{{ form_data.get(field.name, '') }}"
                      {% if field.min is defined %}min="{{ field.min }}"{% endif %}
-                     {% if field.max is defined %}max="{{ field.max }}"{% endif %}>
+                     {% if field.max is defined %}max="{{ field.max }}"{% endif %}
+                     class="h-10 px-2.5 border border-outline rounded-md font-body text-[0.8125rem] text-onsurface bg-slate-100 outline-none transition-colors duration-200 w-full focus:border-accent focus:shadow-[0_0_0_3px_rgba(13,148,136,0.1)]">
               {% endif %}
             </div>
             {% endfor %}
@@ -94,45 +99,29 @@
         </div>
         {% endfor %}
 
-        <!-- Submit -->
-        <div class="detail-submit-bar">
-          <span style="font-size:0.8125rem;color:var(--on-surface-variant);">
-            <span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;" aria-hidden="true">info</span>
+        <div class="detail-submit-bar sticky bottom-4 z-40 bg-white border border-outline rounded-lg px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.08)] mt-6 text-center sm:text-left">
+          <span class="text-[0.8125rem] text-onsurfacevariant">
+            <span class="material-symbols-outlined text-base align-middle" aria-hidden="true">info</span>
             All fields are optional — empty fields use sensible defaults
           </span>
-          <button type="submit" class="btn-predict">
-            Predict Price
-            <span class="material-symbols-outlined" aria-hidden="true">trending_up</span>
-          </button>
+          {% from 'components/btn_predict.html' import btn_predict %}
+          {{ btn_predict("w-auto px-8") }}
         </div>
 
       </form>
 
-      {% if prediction %}
-      <div class="prediction-card" id="prediction-result">
-        <div>
-          <div class="prediction-label">Estimated Price</div>
-          <div class="prediction-value">${{ "{:,.0f}".format(prediction) }}</div>
-        </div>
-        <div class="prediction-right">
-          <span class="confidence-badge confidence-{{ 'high' if confidence >= 80 else 'medium' if confidence >= 50 else 'low' }}">
-            <span class="material-symbols-outlined" style="font-size:16px;">verified</span>
-            {{ confidence }}% Confidence
-          </span>
-          <span class="prediction-range">
-            Range: <strong>${{ "{:,.0f}".format(lower) }}</strong> <span class="prediction-sep">–</span> <strong>${{ "{:,.0f}".format(upper) }}</strong>
-          </span>
-        </div>
-      </div>
-      {% elif error %}
-      <div class="error-banner">
-        <span class="material-symbols-outlined" aria-hidden="true">error</span>
-        <span>{{ error }}</span>
-      </div>
-      {% endif %}
+      {% from 'components/result_banner.html' import result_banner %}
+      {{ result_banner(prediction, confidence, lower, upper, error) }}
     </section>
-
   </main>
 
+  <button id="back-to-top"
+          type="button"
+          aria-label="Back to category navigation"
+          aria-controls="sidebar"
+          title="Back to category navigation"
+          class="fixed bottom-5 right-5 z-50 hidden h-12 w-12 items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_16px_rgba(0,0,0,0.18)] transition-colors duration-200 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 lg:hidden flex">
+    <span class="material-symbols-outlined" aria-hidden="true">arrow_upward</span>
+  </button>
 </body>
 </html>

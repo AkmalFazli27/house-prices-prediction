@@ -1,0 +1,27 @@
+{% macro result_banner(prediction, confidence, lower, upper, error=None) %}
+{% if error %}
+<div class="flex items-center gap-2.5 bg-error/10 border border-error rounded-lg p-6 mb-6 text-error">
+  <span class="material-symbols-outlined text-2xl shrink-0" aria-hidden="true">error</span>
+  <div>
+    <h3 class="font-semibold">Prediction Error</h3>
+    <p class="text-sm">{{ error }}</p>
+  </div>
+</div>
+{% elif prediction is defined and prediction is not none %}
+<div class="bg-primary text-white rounded-xl p-6 sm:p-10 my-6 sm:my-10 grid grid-cols-1 sm:grid-cols-2 items-center gap-6 sm:gap-10" id="prediction-result">
+  <div class="min-w-0">
+    <div class="font-label text-[0.8rem] font-medium tracking-[0.08em] uppercase text-[#6bd8cb] mb-1">Estimated Price</div>
+    <div class="font-display text-[2.25rem] sm:text-[3rem] font-bold leading-[1.1] tracking-[-0.02em] break-words">${{ "{:,.0f}".format(prediction) }}</div>
+  </div>
+  <div class="min-w-0 flex w-full flex-col items-start sm:items-end gap-3">
+    <span class="inline-flex max-w-full items-center gap-1.5 px-3 sm:px-[18px] py-1.5 rounded-full font-label text-xs sm:text-sm font-semibold tracking-[0.03em] {% if confidence >= 80 %}bg-accent/25 text-teal-300{% elif confidence >= 50 %}bg-amber-500/25 text-amber-300{% else %}bg-red-500/25 text-red-300{% endif %}">
+      <span class="material-symbols-outlined" style="font-size:16px;">verified</span>
+      {{ confidence }}% Confidence
+    </span>
+    <span class="max-w-full break-words text-sm text-[#6bd8cb] text-left sm:text-right">
+      Range: <strong class="font-semibold text-white">${{ "{:,.0f}".format(lower) }}</strong> <span class="text-white">–</span> <strong class="font-semibold text-white">${{ "{:,.0f}".format(upper) }}</strong>
+    </span>
+  </div>
+</div>
+{% endif %}
+{% endmacro %}

@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@source "../templates";
+
+@theme {
+  --color-primary: #0F172A;
+  --color-accent: #0D9488;
+  --color-onsurface: #1E293B;
+  --color-onsurfacevariant: #64748B;
+  --color-outline: #E2E8F0;
+  --color-outlinevariant: #CBD5E1;
+  --color-error: #BA1A1A;
+  --color-primary-foreground: #FFFFFF;
+
+  --font-display: "Hanken Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body {
+    @apply font-body text-onsurface bg-white antialiased;
+  }
+}
+
+/* Detail sidebar — unlayered so rules beat Tailwind utilities (mirrors vanilla detail.css) */
+.detail-sidebar-item { color: #64748B; }
+.detail-sidebar-item:hover { background: #F8FAFC; }
+.detail-sidebar-item.active { background: #0D9488; color: #FFFFFF; }
+.detail-sidebar-item.active:hover,
+.detail-sidebar-item.active:focus-visible { background: #0D9488; color: #FFFFFF; }
+.detail-sidebar-item .badge { background: #F8FAFC; color: #64748B; }
+.detail-sidebar-item.active .badge { background: rgba(255,255,255,0.2); color: #FFFFFF; }
+
+@media (max-width: 1023px) {
+  .detail-sidebar-item.active,
+  .detail-sidebar-item.active:hover,
+  .detail-sidebar-item.active:focus-visible {
+    background: transparent;
+    color: #64748B;
+  }
+
+  .detail-sidebar-item.active .badge {
+    background: #F8FAFC;
+    color: #64748B;
+  }
+}
