@@ -1,8 +1,12 @@
 {% macro btn_predict(width_class="w-full") %}
-<button type="submit" class="{{ width_class }} rounded-md px-6 py-3 font-body text-base font-semibold bg-primary text-white inline-flex items-center gap-2 transition-colors hover:bg-accent cursor-pointer">
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<button type="submit" class="{{ width_class }} btn-predict rounded-md px-6 py-3 font-body text-base font-semibold bg-primary text-white inline-flex items-center gap-2 transition-colors hover:bg-accent cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
+  <svg class="btn-predict-icon shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
   </svg>
-  Predict
+  <span class="btn-label">Predict</span>
+  <svg class="btn-predict-spinner hidden animate-spin h-4 w-4 shrink-0" width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+  </svg>
 </button>
 {% endmacro %}

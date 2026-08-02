@@ -80,6 +80,23 @@ class TemplateRegressionTests(unittest.TestCase):
         self.assertIn("uppercase", html)
         self.assertIn("border-b-2", html)
 
+    def test_predict_button_contains_loading_state_markup(self):
+        html = self.environment.from_string(
+            "{% from 'components/btn_predict.html' import btn_predict %}"
+            "{{ btn_predict() }}"
+        ).render()
+
+        self.assertIn("btn-predict", html)
+        self.assertIn("btn-label", html)
+        self.assertIn("btn-predict-icon", html)
+        self.assertIn("btn-predict-spinner", html)
+        self.assertIn("hidden animate-spin", html)
+        self.assertIn("h-4 w-4", html)
+        self.assertIn('width="16"', html)
+        self.assertIn('height="16"', html)
+        self.assertIn("disabled:opacity-60", html)
+        self.assertIn("disabled:cursor-not-allowed", html)
+
 
 if __name__ == "__main__":
     unittest.main()

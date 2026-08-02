@@ -20,7 +20,7 @@
   if (predResult) predResult.scrollIntoView({ behavior: "smooth", block: "center" });
 }) ();
 
-// form validation + loading state
+// form validation
 document.querySelector("form")?.addEventListener("submit", function (e) {
   let valid = true;
   this.querySelectorAll("[required]").forEach((field) => {
@@ -33,9 +33,5 @@ document.querySelector("form")?.addEventListener("submit", function (e) {
   });
   if (!valid) {
     e.preventDefault();
-    return;
   }
-  const btn = this.querySelector(".btn-predict");
-  btn.disabled = true;
-  btn.innerHTML = "Predicting...";
 });
