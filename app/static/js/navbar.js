@@ -6,8 +6,8 @@
   function setOpen(open) {
     menu.classList.toggle("hidden", !open);
     toggle.setAttribute("aria-expanded", String(open));
-    toggle.querySelector(".icon-open")?.classList.toggle("hidden", open);
-    toggle.querySelector(".icon-close")?.classList.toggle("hidden", !open);
+    toggle.querySelector(".icon-open")?.toggleAttribute("hidden", open);
+    toggle.querySelector(".icon-close")?.toggleAttribute("hidden", !open);
   }
 
   toggle.addEventListener("click", () => {
