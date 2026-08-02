@@ -8,190 +8,172 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=block" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/base.css') }}?v=2">
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/about.css') }}?v=1">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/tailwind.css') }}">
 </head>
 <body>
-
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container">
-      <a href="/" class="navbar-logo">Omah.AI</a>
-      <ul class="navbar-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/simple">Quick Mode</a></li>
-        <li><a href="/detail">Detailed Mode</a></li>
-        <li><a href="/about" class="active" aria-current="page">About</a></li>
-      </ul>
-    </div>
-  </nav>
+  {% set active_nav = 'about' %}
+  {% include 'components/navbar.html' %}
 
   <main>
-    <!-- Hero -->
-    <section class="about-hero">
-      <div class="container">
-        <div class="about-hero-badge">Ames, Iowa &mdash; AI-Powered Valuation</div>
-        <h1>About Omah.AI</h1>
-        <p>Omah.AI is an AI-powered house price prediction application for Ames, Iowa. Built using the Ames Housing Dataset with 79 explanatory variables, it delivers accurate property valuations through an ensemble of machine learning models.</p>
+    <section class="about-hero pt-[60px] pb-10 text-center">
+      <div class="max-w-7xl mx-auto px-6">
+        <span class="about-hero-badge inline-flex items-center px-4 py-1.5 rounded-full bg-accent/10 text-accent border border-accent/15 font-label text-xs font-medium tracking-widest uppercase mb-6">Ames, Iowa &mdash; AI-Powered Valuation</span>
+        <h1 class="font-display text-3xl md:text-[3rem] font-bold leading-tight tracking-tight text-onsurface max-w-[900px] mx-auto mb-6">About Omah.AI</h1>
+        <p class="text-base md:text-lg leading-relaxed text-onsurfacevariant max-w-[700px] mx-auto">Omah.AI is an AI-powered house price prediction application for Ames, Iowa. Built using the Ames Housing Dataset with 79 explanatory variables, it delivers accurate property valuations through an ensemble of machine learning models.</p>
       </div>
     </section>
 
-    <!-- ML Pipeline -->
-    <section class="about-section">
-      <div class="container">
-        <h2 class="about-section-title">Machine Learning Pipeline</h2>
-        <div class="pipeline-flow">
-          <div class="pipeline-step">
-            <div class="pipeline-step-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">database</span>
+    <section class="about-section py-10">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="about-section-title font-display text-2xl md:text-[2rem] font-semibold text-center mb-10 text-onsurface">Machine Learning Pipeline</h2>
+        <div class="pipeline-flow flex flex-col lg:flex-row items-center justify-center max-w-[1100px] mx-auto">
+          <div class="pipeline-step flex flex-col items-center text-center flex-1 relative z-10 group">
+            <div class="pipeline-step-icon w-16 h-16 rounded-xl bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-[28px]" aria-hidden="true">database</span>
             </div>
-            <div class="pipeline-step-label">Raw Data</div>
-            <div class="pipeline-step-desc">Ames Housing Dataset with 2,919 records and 79 features</div>
+            <div class="pipeline-step-label font-display text-sm font-semibold text-onsurface mb-1">Raw Data</div>
+            <div class="pipeline-step-desc text-xs leading-snug text-onsurfacevariant max-w-[150px]">Ames Housing Dataset with 2,919 records and 79 features</div>
           </div>
-          <div class="pipeline-arrow">
+          <div class="pipeline-arrow flex items-center justify-center text-outlinevariant text-2xl w-12 py-2 lg:pt-[22px] shrink-0 rotate-90 lg:rotate-0">
             <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
           </div>
-          <div class="pipeline-step">
-            <div class="pipeline-step-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">cleaning_services</span>
+          <div class="pipeline-step flex flex-col items-center text-center flex-1 relative z-10 group">
+            <div class="pipeline-step-icon w-16 h-16 rounded-xl bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-[28px]" aria-hidden="true">cleaning_services</span>
             </div>
-            <div class="pipeline-step-label">Data Cleaning</div>
-            <div class="pipeline-step-desc">Handle missing values, remove duplicates, transform target</div>
+            <div class="pipeline-step-label font-display text-sm font-semibold text-onsurface mb-1">Data Cleaning</div>
+            <div class="pipeline-step-desc text-xs leading-snug text-onsurfacevariant max-w-[150px]">Handle missing values, remove duplicates, transform target</div>
           </div>
-          <div class="pipeline-arrow">
+          <div class="pipeline-arrow flex items-center justify-center text-outlinevariant text-2xl w-12 py-2 lg:pt-[22px] shrink-0 rotate-90 lg:rotate-0">
             <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
           </div>
-          <div class="pipeline-step">
-            <div class="pipeline-step-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">construction</span>
+          <div class="pipeline-step flex flex-col items-center text-center flex-1 relative z-10 group">
+            <div class="pipeline-step-icon w-16 h-16 rounded-xl bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-[28px]" aria-hidden="true">construction</span>
             </div>
-            <div class="pipeline-step-label">Feature Engineering</div>
-            <div class="pipeline-step-desc">Create new features, encode categories, scale data</div>
+            <div class="pipeline-step-label font-display text-sm font-semibold text-onsurface mb-1">Feature Engineering</div>
+            <div class="pipeline-step-desc text-xs leading-snug text-onsurfacevariant max-w-[150px]">Create new features, encode categories, scale data</div>
           </div>
-          <div class="pipeline-arrow">
+          <div class="pipeline-arrow flex items-center justify-center text-outlinevariant text-2xl w-12 py-2 lg:pt-[22px] shrink-0 rotate-90 lg:rotate-0">
             <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
           </div>
-          <div class="pipeline-step">
-            <div class="pipeline-step-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">model_training</span>
+          <div class="pipeline-step flex flex-col items-center text-center flex-1 relative z-10 group">
+            <div class="pipeline-step-icon w-16 h-16 rounded-xl bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-[28px]" aria-hidden="true">model_training</span>
             </div>
-            <div class="pipeline-step-label">Model Training</div>
-            <div class="pipeline-step-desc">Stacking Regressor with 5 base estimators</div>
+            <div class="pipeline-step-label font-display text-sm font-semibold text-onsurface mb-1">Model Training</div>
+            <div class="pipeline-step-desc text-xs leading-snug text-onsurfacevariant max-w-[150px]">Stacking Regressor with 5 base estimators</div>
           </div>
-          <div class="pipeline-arrow">
+          <div class="pipeline-arrow flex items-center justify-center text-outlinevariant text-2xl w-12 py-2 lg:pt-[22px] shrink-0 rotate-90 lg:rotate-0">
             <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
           </div>
-          <div class="pipeline-step">
-            <div class="pipeline-step-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">trending_up</span>
+          <div class="pipeline-step flex flex-col items-center text-center flex-1 relative z-10 group">
+            <div class="pipeline-step-icon w-16 h-16 rounded-xl bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-[28px]" aria-hidden="true">trending_up</span>
             </div>
-            <div class="pipeline-step-label">Prediction</div>
-            <div class="pipeline-step-desc">Accurate price estimate with confidence score</div>
+            <div class="pipeline-step-label font-display text-sm font-semibold text-onsurface mb-1">Prediction</div>
+            <div class="pipeline-step-desc text-xs leading-snug text-onsurfacevariant max-w-[150px]">Accurate price estimate with confidence score</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Technologies -->
-    <section class="about-section about-tech-section">
-      <div class="container">
-        <h2 class="about-section-title">Technologies</h2>
-        <div class="tech-grid">
-          <div class="tech-item">
-            <div class="tech-item-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">code</span>
+    <section class="about-section py-10 bg-slate-100">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="about-section-title font-display text-2xl md:text-[2rem] font-semibold text-center mb-10 text-onsurface">Technologies</h2>
+        <div class="tech-grid grid grid-cols-2 md:grid-cols-4 gap-6 max-w-[800px] mx-auto">
+          <div class="tech-item flex flex-col items-center text-center p-6 rounded-lg border border-outline transition-colors duration-300 hover:border-accent hover:-translate-y-0.5 group">
+            <div class="tech-item-icon w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-2xl" aria-hidden="true">code</span>
             </div>
-            <div class="tech-item-name">Python</div>
+            <div class="tech-item-name font-label text-xs font-medium tracking-wider text-onsurface">Python</div>
           </div>
-          <div class="tech-item">
-            <div class="tech-item-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">web</span>
+          <div class="tech-item flex flex-col items-center text-center p-6 rounded-lg border border-outline transition-colors duration-300 hover:border-accent hover:-translate-y-0.5 group">
+            <div class="tech-item-icon w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-2xl" aria-hidden="true">web</span>
             </div>
-            <div class="tech-item-name">FastAPI</div>
+            <div class="tech-item-name font-label text-xs font-medium tracking-wider text-onsurface">FastAPI</div>
           </div>
-          <div class="tech-item">
-            <div class="tech-item-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
+          <div class="tech-item flex flex-col items-center text-center p-6 rounded-lg border border-outline transition-colors duration-300 hover:border-accent hover:-translate-y-0.5 group">
+            <div class="tech-item-icon w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-2xl" aria-hidden="true">smart_toy</span>
             </div>
-            <div class="tech-item-name">scikit-learn</div>
+            <div class="tech-item-name font-label text-xs font-medium tracking-wider text-onsurface">scikit-learn</div>
           </div>
-          <div class="tech-item">
-            <div class="tech-item-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">trending_up</span>
+          <div class="tech-item flex flex-col items-center text-center p-6 rounded-lg border border-outline transition-colors duration-300 hover:border-accent hover:-translate-y-0.5 group">
+            <div class="tech-item-icon w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-2xl" aria-hidden="true">trending_up</span>
             </div>
-            <div class="tech-item-name">XGBoost</div>
+            <div class="tech-item-name font-label text-xs font-medium tracking-wider text-onsurface">XGBoost</div>
           </div>
-          <div class="tech-item">
-            <div class="tech-item-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">gradient</span>
+          <div class="tech-item flex flex-col items-center text-center p-6 rounded-lg border border-outline transition-colors duration-300 hover:border-accent hover:-translate-y-0.5 group">
+            <div class="tech-item-icon w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-2xl" aria-hidden="true">gradient</span>
             </div>
-            <div class="tech-item-name">LightGBM</div>
+            <div class="tech-item-name font-label text-xs font-medium tracking-wider text-onsurface">LightGBM</div>
           </div>
-          <div class="tech-item">
-            <div class="tech-item-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">category</span>
+          <div class="tech-item flex flex-col items-center text-center p-6 rounded-lg border border-outline transition-colors duration-300 hover:border-accent hover:-translate-y-0.5 group">
+            <div class="tech-item-icon w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-2xl" aria-hidden="true">category</span>
             </div>
-            <div class="tech-item-name">CatBoost</div>
+            <div class="tech-item-name font-label text-xs font-medium tracking-wider text-onsurface">CatBoost</div>
           </div>
-          <div class="tech-item">
-            <div class="tech-item-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">html</span>
+          <div class="tech-item flex flex-col items-center text-center p-6 rounded-lg border border-outline transition-colors duration-300 hover:border-accent hover:-translate-y-0.5 group">
+            <div class="tech-item-icon w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-2xl" aria-hidden="true">html</span>
             </div>
-            <div class="tech-item-name">Jinja2</div>
+            <div class="tech-item-name font-label text-xs font-medium tracking-wider text-onsurface">Jinja2</div>
           </div>
-          <div class="tech-item">
-            <div class="tech-item-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">cloud</span>
+          <div class="tech-item flex flex-col items-center text-center p-6 rounded-lg border border-outline transition-colors duration-300 hover:border-accent hover:-translate-y-0.5 group">
+            <div class="tech-item-icon w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center mb-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <span class="material-symbols-outlined text-2xl" aria-hidden="true">cloud</span>
             </div>
-            <div class="tech-item-name">Render</div>
+            <div class="tech-item-name font-label text-xs font-medium tracking-wider text-onsurface">Render</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Model Performance -->
-    <section class="about-section about-stats-section">
-      <div class="container">
-        <h2 class="about-section-title">Model Performance</h2>
-        <div class="about-stats-grid">
-          <div class="about-stat-card">
-            <span class="about-stat-card-icon material-symbols-outlined" aria-hidden="true">reliability</span>
-            <span class="stat-value">8.25%</span>
-            <span class="stat-label">Avg Error</span>
+    <section class="about-section py-10 bg-slate-100">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="about-section-title font-display text-2xl md:text-[2rem] font-semibold text-center mb-10 text-onsurface">Model Performance</h2>
+        <div class="about-stats-grid grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[900px] mx-auto">
+          <div class="about-stat-card text-center p-6">
+            <span class="about-stat-card-icon text-[2rem] text-accent mb-3 flex items-center justify-center material-symbols-outlined" aria-hidden="true">reliability</span>
+            <span class="stat-value font-display text-[2rem] font-bold text-onsurface block">8.25%</span>
+            <span class="stat-label font-label text-xs font-medium tracking-widest uppercase text-onsurfacevariant mt-1 block">Avg Error</span>
           </div>
-          <div class="about-stat-card">
-            <span class="about-stat-card-icon material-symbols-outlined" aria-hidden="true">trending_up</span>
-            <span class="stat-value">0.1197</span>
-            <span class="stat-label">RMSE Score</span>
+          <div class="about-stat-card text-center p-6">
+            <span class="about-stat-card-icon text-[2rem] text-accent mb-3 flex items-center justify-center material-symbols-outlined" aria-hidden="true">trending_up</span>
+            <span class="stat-value font-display text-[2rem] font-bold text-onsurface block">0.1197</span>
+            <span class="stat-label font-label text-xs font-medium tracking-widest uppercase text-onsurfacevariant mt-1 block">RMSE Score</span>
           </div>
-          <div class="about-stat-card">
-            <span class="about-stat-card-icon material-symbols-outlined" aria-hidden="true">layers</span>
-            <span class="stat-value">0.9061</span>
-            <span class="stat-label">R&sup2; Score</span>
+          <div class="about-stat-card text-center p-6">
+            <span class="about-stat-card-icon text-[2rem] text-accent mb-3 flex items-center justify-center material-symbols-outlined" aria-hidden="true">layers</span>
+            <span class="stat-value font-display text-[2rem] font-bold text-onsurface block">0.9061</span>
+            <span class="stat-label font-label text-xs font-medium tracking-widest uppercase text-onsurfacevariant mt-1 block">R&sup2; Score</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Developer -->
-    <section class="about-section">
-      <div class="container">
-        <h2 class="about-section-title">Developer</h2>
-        <div class="developer-card">
-          <div class="developer-name">Akmal Fazli</div>
-          <div class="developer-role">Developer</div>
-          <div class="developer-links">
-            <a href="https://github.com/AkmalFazli27" target="_blank" rel="noopener noreferrer" class="developer-link" aria-label="GitHub">
-              <span class="material-symbols-outlined" aria-hidden="true">code</span>
+    <section class="about-section py-10">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="about-section-title font-display text-2xl md:text-[2rem] font-semibold text-center mb-10 text-onsurface">Developer</h2>
+        <div class="developer-card max-w-[500px] mx-auto text-center p-10 border border-outline rounded-xl bg-white">
+          <div class="developer-name font-display text-2xl font-bold text-onsurface mb-1">Akmal Fazli</div>
+          <div class="developer-role font-label text-xs font-medium tracking-widest uppercase text-onsurfacevariant mb-6">Developer</div>
+          <div class="developer-links flex items-center justify-center gap-6">
+            <a href="https://github.com/AkmalFazli27" target="_blank" rel="noopener noreferrer" class="developer-link inline-flex items-center justify-center w-11 h-11 rounded-lg bg-slate-50 text-onsurfacevariant no-underline transition-colors duration-200 hover:bg-accent hover:text-white" aria-label="GitHub">
+              <span class="material-symbols-outlined text-[22px]" aria-hidden="true">code</span>
             </a>
-            <a href="https://www.linkedin.com/in/akmal-fazli/" target="_blank" rel="noopener noreferrer" class="developer-link" aria-label="LinkedIn">
-              <span class="material-symbols-outlined" aria-hidden="true">link</span>
+            <a href="https://www.linkedin.com/in/akmal-fazli/" target="_blank" rel="noopener noreferrer" class="developer-link inline-flex items-center justify-center w-11 h-11 rounded-lg bg-slate-50 text-onsurfacevariant no-underline transition-colors duration-200 hover:bg-accent hover:text-white" aria-label="LinkedIn">
+              <span class="material-symbols-outlined text-[22px]" aria-hidden="true">link</span>
             </a>
           </div>
         </div>
       </div>
     </section>
   </main>
-
 </body>
 </html>

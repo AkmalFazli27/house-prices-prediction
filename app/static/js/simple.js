@@ -7,7 +7,7 @@
       const min = +slider.min;
       const max = +slider.max || 10;
       const pct = ((slider.value - min) / (max - min)) * 100;
-      slider.style.background = `linear-gradient(to right, var(--secondary) ${pct}%, var(--outline) ${pct}%)`;
+      slider.style.background = `linear-gradient(to right, var(--color-accent) ${pct}%, var(--color-outline) ${pct}%)`;
     }
     slider.addEventListener("input", function () {
       value.textContent = this.value;
@@ -25,7 +25,7 @@ document.querySelector("form")?.addEventListener("submit", function (e) {
   let valid = true;
   this.querySelectorAll("[required]").forEach((field) => {
     if (!field.value) {
-      field.style.borderColor = "var(--error)";
+      field.style.borderColor = "var(--color-error)";
       valid = false;
     } else {
       field.style.borderColor = "";
