@@ -45,6 +45,21 @@ class TemplateRegressionTests(unittest.TestCase):
         self.assertIn("$275,000", html)
         self.assertIn("82%", html)
 
+    def test_prediction_result_uses_stacked_mobile_layout(self):
+        html = self.render_result(
+            prediction=250000.4,
+            confidence=82,
+            lower=225000,
+            upper=275000,
+        )
+
+        self.assertIn("grid-cols-1 sm:grid-cols-2", html)
+        self.assertIn("p-6 sm:p-10", html)
+        self.assertIn("gap-6 sm:gap-10", html)
+        self.assertIn("min-w-0", html)
+        self.assertIn("items-start sm:items-end", html)
+        self.assertIn("text-left sm:text-right", html)
+
     def test_error_result_does_not_render_success_card(self):
         html = self.render_result(error="Prediction failed")
 
