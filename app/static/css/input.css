@@ -31,3 +31,17 @@
 .detail-sidebar-item.active:focus-visible { background: #0D9488; color: #FFFFFF; }
 .detail-sidebar-item .badge { background: #F8FAFC; color: #64748B; }
 .detail-sidebar-item.active .badge { background: rgba(255,255,255,0.2); color: #FFFFFF; }
+
+@media (max-width: 1023px) {
+  .detail-sidebar-item.active,
+  .detail-sidebar-item.active:hover,
+  .detail-sidebar-item.active:focus-visible {
+    background: transparent;
+    color: #64748B;
+  }
+
+  .detail-sidebar-item.active .badge {
+    background: #F8FAFC;
+    color: #64748B;
+  }
+}

@@ -1,7 +1,15 @@
 (function () {
   const sections = document.querySelectorAll(".detail-section");
   const navItems = document.querySelectorAll(".detail-sidebar-item");
+  const backToTop = document.getElementById("back-to-top");
+  const backToTopThreshold = 300;
   let suppressUntil = 0;
+
+  function updateBackToTop() {
+    if (!backToTop) return;
+
+    backToTop.classList.toggle("hidden", window.scrollY < backToTopThreshold);
+  }
 
   function updateActiveSection() {
     if (Date.now() < suppressUntil) return;
@@ -50,9 +58,20 @@
     });
   });
 
-  window.addEventListener("scroll", updateActiveSection, { passive: true });
-  window.addEventListener("resize", updateActiveSection, { passive: true });
+  backToTop?.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  window.addEventListener("scroll", function () {
+    updateActiveSection();
+    updateBackToTop();
+  }, { passive: true });
+  window.addEventListener("resize", function () {
+    updateActiveSection();
+    updateBackToTop();
+  });
   updateActiveSection();
+  updateBackToTop();
 
   document.querySelectorAll('input[type="range"]').forEach((slider) => {
     slider.addEventListener("input", function () {

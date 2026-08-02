@@ -10,6 +10,9 @@ const detailScript = fs.readFileSync(
 
 function runScrollSpy({ scrollY, scrollHeight, sectionRects }) {
   const activeSections = new Map();
+  const buttonState = { hidden: true };
+  const buttonHandlers = {};
+  const scrollCalls = [];
   const sections = sectionRects.map(([id, rect]) => ({
     id: `section-${id}`,
     getBoundingClientRect: () => rect,
@@ -21,6 +24,16 @@ function runScrollSpy({ scrollY, scrollHeight, sectionRects }) {
       toggle: (_className, isActive) => activeSections.set(id, isActive),
     },
   }));
+  const backToTop = {
+    classList: {
+      toggle: (className, isHidden) => {
+        if (className === "hidden") buttonState.hidden = isHidden;
+      },
+    },
+    addEventListener: (event, handler) => {
+      buttonHandlers[event] = handler;
+    },
+  };
 
   const context = {
     document: {
@@ -30,21 +43,22 @@ function runScrollSpy({ scrollY, scrollHeight, sectionRects }) {
         if (selector === ".detail-sidebar-item") return navItems;
         return [];
       },
-      getElementById: () => null,
+      getElementById: (id) => id === "back-to-top" ? backToTop : null,
     },
     window: {
       innerHeight: 800,
       scrollY,
       addEventListener: () => {},
+      scrollTo: (options) => scrollCalls.push(options),
     },
   };
 
   vm.runInNewContext(detailScript, context);
-  return activeSections;
+  return { activeSections, buttonState, buttonHandlers, scrollCalls };
 }
 
 function testKeepsOutdoorFeaturesActive() {
-  const activeSections = runScrollSpy({
+  const { activeSections } = runScrollSpy({
     scrollY: 400,
     scrollHeight: 1800,
     sectionRects: [
@@ -59,7 +73,7 @@ function testKeepsOutdoorFeaturesActive() {
 }
 
 function testActivatesSaleInformationAtBottom() {
-  const activeSections = runScrollSpy({
+  const { activeSections } = runScrollSpy({
     scrollY: 1000,
     scrollHeight: 1800,
     sectionRects: [
@@ -73,12 +87,49 @@ function testActivatesSaleInformationAtBottom() {
   assert.equal(activeSections.get("outdoor_features"), false);
 }
 
+function testBackToTopIsHiddenBeforeThreshold() {
+  const { buttonState } = runScrollSpy({
+    scrollY: 299,
+    scrollHeight: 1800,
+    sectionRects: [],
+  });
+
+  assert.equal(buttonState.hidden, true);
+}
+
+function testBackToTopIsVisibleAfterThreshold() {
+  const { buttonState } = runScrollSpy({
+    scrollY: 300,
+    scrollHeight: 1800,
+    sectionRects: [],
+  });
+
+  assert.equal(buttonState.hidden, false);
+}
+
+function testBackToTopUsesSmoothScroll() {
+  const { buttonHandlers, scrollCalls } = runScrollSpy({
+    scrollY: 400,
+    scrollHeight: 1800,
+    sectionRects: [],
+  });
+
+  assert.equal(typeof buttonHandlers.click, "function");
+  buttonHandlers.click();
+  assert.equal(scrollCalls.length, 1);
+  assert.equal(scrollCalls[0].top, 0);
+  assert.equal(scrollCalls[0].behavior, "smooth");
+}
+
 const tests = [
   [
     "keeps Outdoor Features active when Sale Information is visible but page is not at bottom",
     testKeepsOutdoorFeaturesActive,
   ],
   ["activates Sale Information when the document is at the bottom", testActivatesSaleInformationAtBottom],
+  ["keeps the back-to-top button hidden before the scroll threshold", testBackToTopIsHiddenBeforeThreshold],
+  ["shows the back-to-top button after the scroll threshold", testBackToTopIsVisibleAfterThreshold],
+  ["uses smooth scrolling when the back-to-top button is clicked", testBackToTopUsesSmoothScroll],
 ];
 
 let failures = 0;
