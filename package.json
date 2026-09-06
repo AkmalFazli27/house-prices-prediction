@@ -1,6 +1,7 @@
 {
   "name": "house-prices-prediction",
   "version": "1.0.0",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "npx @tailwindcss/cli -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch",
